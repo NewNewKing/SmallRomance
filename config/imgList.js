@@ -1,4 +1,4 @@
 const imgList = {
 	bg2:'./img/bg2.jpg',
-	snowflake:'./img/snowflake.png'
+	// snowflake:'./img/snowflake.png'
 }
