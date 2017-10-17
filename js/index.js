@@ -25,6 +25,9 @@
 			this.snowflake = [];
 			//动画的时间
 			this.time = 0;
+
+			//下的类型('snow','heart')
+			this.drop = "snow";
 		}
 
 		init(){
@@ -45,40 +48,36 @@
 
 			return obj;
 		}
-		//下雪的动画
+		//动画效果
 		animate(){
 			let j = 0,item = null;
 			const that = this;
+			snowing();
 
 			function snowing () {
-				requestAnimationFrame(() => {
-					// 清空画布
-					that.snowCtx.clearRect(0,0,that.width,that.height);
+				// 清空画布
+				that.snowCtx.clearRect(0,0,that.width,that.height);
 
-					// 控制雪花产生速度
-					++that.time >= 60000 ? 0 : that.time;
-					that.time % 15 == 0 && that.snowflake.push(new Snowflake());
-					that.time % 15 == 0 && that.snowflake.push(new HeartParticles());
-
-					
-					//执行雪花飘落
-					for(j = 0;j < that.snowflake.length; j++){
-						item = that.snowflake[j];
-						item.drop();
-						if(item.judge()){
-							that.snowflake.splice(j,1);
-							--j;
-							continue;
-						}
-						item.draw(that.snowCtx);
-					}			
+				// 控制雪花产生速度
+				++that.time >= 60000 ? 0 : that.time;
+				that.drop == 'snow' && that.time % 60 == 0 && that.snowflake.push(new Snowflake());
+				that.drop == 'heart' && that.time % 15 == 0 && that.snowflake.push(new HeartParticles());
 
 
-					snowing();
-				});	
-			}
-			snowing();
-			
+				//执行雪花飘落
+				for(j = 0;j < that.snowflake.length; j++){
+					item = that.snowflake[j];
+					item.drop();
+					if(item.judge()){
+						that.snowflake.splice(j,1);
+						--j;
+						continue;
+					}
+					item.draw(that.snowCtx);
+				}	
+
+				requestAnimationFrame(snowing);
+			}			
 		}
 	}
 

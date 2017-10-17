@@ -6,7 +6,7 @@ class Snowflake {
 		this.x = x ? x : (750 - this.size) * random(),
 		this.y = y ? y : -this.size,
 		this.opacity = opacity + (1 - opacity) * random();		
-		this.speed = speed + 3 * random();
+		this.speed = speed + random();
 		this.rotate = rotate;
 		this.rotateDirection = random() > 0.5 ? 1 : -1;
 		this.direction = random() > 0.5 ? 1 : -1;
