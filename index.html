@@ -39,11 +39,9 @@
 	<canvas id='snow' width="750" height="1334">您的浏览器不支持Canvas元素</canvas>
 	<script>
 		if(!/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
-			console.log(1);
 			const body = document.querySelectorAll('body')[0];
 			body.style.width = '375px';
 			body.style.height = '667px';
-			console.log(body.style);
 		}
 	</script>
 

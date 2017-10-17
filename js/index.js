@@ -77,7 +77,7 @@
 			function snowing () {
 				requestAnimationFrame(() => {
 					++i >= 60000 ? 0 : i;
-					if(i % 30 == 0) that.snowflake.push(new Snowflake());
+					if(i % 10 == 0) that.snowflake.push(new Snowflake());
 
 					that.snowCtx.clearRect(0,0,that.width,that.height);
 
@@ -89,13 +89,14 @@
 							--j;
 							continue;
 						}
-						that.snowCtx.save();
-						that.snowCtx.globalAlpha = item.opacity;
-						that.snowCtx.translate(item.x + item.size / 2,item.y + item.size / 2);
-						that.snowCtx.rotate(item.rotate * Math.PI / 180);
-						that.snowCtx.translate(-item.x - item.size / 2,-item.y - item.size / 2);
-						that.snowCtx.drawImage(that.imgs.snowflake,item.x,item.y,item.size,item.size);
-						that.snowCtx.restore();
+						item.draw(that.snowCtx);
+						// that.snowCtx.save();
+						// that.snowCtx.globalAlpha = item.opacity;
+						// that.snowCtx.translate(item.x + item.size / 2,item.y + item.size / 2);
+						// that.snowCtx.rotate(item.rotate * Math.PI / 180);
+						// that.snowCtx.translate(-item.x - item.size / 2,-item.y - item.size / 2);
+						// that.snowCtx.drawImage(that.imgs.snowflake,item.x,item.y,item.size,item.size);
+						// that.snowCtx.restore();
 					}			
 
 					snowing();
