@@ -57,7 +57,8 @@
 
 					// 控制雪花产生速度
 					++that.time >= 60000 ? 0 : that.time;
-					if(that.time % 10 == 0) that.snowflake.push(new Snowflake());
+					that.time % 15 == 0 && that.snowflake.push(new Snowflake());
+					that.time % 15 == 0 && that.snowflake.push(new HeartParticles());
 
 					
 					//执行雪花飘落
@@ -72,7 +73,7 @@
 						item.draw(that.snowCtx);
 					}			
 
-					
+
 					snowing();
 				});	
 			}
