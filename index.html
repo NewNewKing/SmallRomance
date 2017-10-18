@@ -28,15 +28,29 @@
 		#bg{
 			z-index: 5;
 		}
+		#title{
+			z-index: 9;
+		}
 		#snow{
 			z-index: 10;
+		}
+		#loading{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 999;
 		}
 	</style>
 </head>
 <body>
-	<canvas id='bg' width="750" height="1334">您的浏览器不支持Canvas元素</canvas>
+	<canvas id='bg' width="375" height="667">您的浏览器不支持Canvas元素</canvas>
+	<canvas id='title' width="375" height="667">您的浏览器不支持Canvas元素</canvas>
 
-	<canvas id='snow' width="750" height="1334">您的浏览器不支持Canvas元素</canvas>
+	<canvas id='snow' width="375" height="667">您的浏览器不支持Canvas元素</canvas>
+	<div id='loading'>loading ...</div>
+
 	<script>
 		if(!/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
 			const body = document.querySelectorAll('body')[0];
@@ -47,9 +61,10 @@
 
 	<script src='config/imgList.js'></script>
 	<script src='js/imgLoader.js'></script>
-	
-	<script src='js/particlesHeart.js'></script>
+
 	<script src='js/snowflake.js'></script>
+	<script src='js/particlesHeart.js'></script>
+	<script src='js/titleParticles.js'></script>
 
 	<script src='js/index.js'></script>
 </body>

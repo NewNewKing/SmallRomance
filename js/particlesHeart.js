@@ -1,28 +1,12 @@
 // const random = Math.random;
 
-class HeartParticles {
+//下心心
+class HeartParticles extends Snowflake{
 	constructor({x = 0,y = 0,minSize = 20,maxSize = 30,speed = 1} = {}) {
-		this.size = minSize + ( maxSize - minSize ) * random();
-		this.x = x ? x : (750 - this.size) * random(),
-		this.y = y ? y : -this.size,
+		super({minSize,maxSize});
 		this.speed = speed + 2 * random();
 		this.color = `hsla(${random() * 360}, 90%, 65%, 1)`;
-		this.direction = random() > 0.5 ? 1 : -1;
 	}
-
-	drop(){
-		this.x += Math.random() * this.direction;
-		this.y += this.speed;
-	}
-
-	judge({height = 1334,width = 750} = {}){
-		if(this.x >= -this.size && this.x <= width && this.y <= height && this.y >= -this.size){
-			return false;
-		}else{
-			return true;
-		}
-	}
-
 	draw(ctx){
 		ctx.save();
 		ctx.beginPath();

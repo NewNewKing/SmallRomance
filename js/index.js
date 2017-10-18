@@ -2,18 +2,20 @@
 	class Canvas {
 		constructor(){
 			//画布宽高
-			this.height = 1334;
-			this.width = 750;
+			this.height = 667;
+			this.width = 375;
 
 			//首先获取画笔
-			this.bgCanvas = document.querySelector('#bg');
-			this.bgCtx = this.bgCanvas.getContext('2d');
+			this.bgCtx = document.querySelector('#bg').getContext('2d');
+			this.titleCtx = document.querySelector('#title').getContext('2d');
 
-			this.snowCanvas = document.querySelector('#snow');
-			this.snowCtx = this.snowCanvas.getContext('2d');
+			this.snowCtx = document.querySelector('#snow').getContext('2d');
+
+
 
 			//加载图片
 			ImgLoader.load(imgList).then(imgs => {
+				document.querySelector('#loading').style.display = 'none';
 				this.imgs = this.dealImgs(imgs);				
 				this.init();
 			}).catch(err => {
@@ -36,7 +38,7 @@
 
 			this.bgCtx.drawImage(bg,0,0,this.width,this.height);
 
-			this.animate();
+			this.draw();
 		}
 
 		//处理图片为需要的对象类型
@@ -49,10 +51,16 @@
 			return obj;
 		}
 		//动画效果
-		animate(){
+		draw(){
 			let j = 0,item = null;
 			const that = this;
 			snowing();
+
+			this.titleCtx.fillStyle = '#fff';
+			this.titleCtx.font = 'bold 20px sans-serif';
+			this.titleCtx.fillText('Merry Christmas',100,50);
+
+			let data = this.titleCtx.getImageData(0,0,2,2);
 
 			function snowing () {
 				// 清空画布
@@ -60,21 +68,18 @@
 
 				// 控制雪花产生速度
 				++that.time >= 60000 ? 0 : that.time;
+				// that.time % 15 == 0 && that.snowflake.push(new HeartParticles())
 				that.drop == 'snow' && that.time % 60 == 0 && that.snowflake.push(new Snowflake());
 				that.drop == 'heart' && that.time % 15 == 0 && that.snowflake.push(new HeartParticles());
 
 
 				//执行雪花飘落
-				for(j = 0;j < that.snowflake.length; j++){
+				for(j in that.snowflake){
 					item = that.snowflake[j];
 					item.drop();
-					if(item.judge()){
-						that.snowflake.splice(j,1);
-						--j;
-						continue;
-					}
+					item.outBoundary() && that.snowflake.splice(j,1);
 					item.draw(that.snowCtx);
-				}	
+				}
 
 				requestAnimationFrame(snowing);
 			}			
