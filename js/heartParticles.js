@@ -2,10 +2,13 @@
 
 //下心心
 class HeartParticles extends Snowflake{
-	constructor({x = 0,y = 0,minSize = 20,maxSize = 30,speed = 1} = {}) {
-		super({minSize,maxSize});
-		this.speed = speed + 2 * random();
+	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,speed = 1} = {}) {
+		super({minSize,maxSize,x,y});
+		this.speed = speed + 1 * random();
 		this.color = `hsla(${random() * 360}, 90%, 65%, 1)`;
+	}
+	moveTo({x,y}){
+
 	}
 	draw(ctx){
 		ctx.save();

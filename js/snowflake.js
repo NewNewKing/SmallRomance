@@ -4,6 +4,7 @@ const random = Math.random;
 class Particles {
 	constructor({x,y,minSize = 5,maxSize = 7.5} =  {}){
 		this.size = minSize + ( maxSize - minSize ) * random();
+
 		this.x = x ? x : (375 - this.size) * random();
 		this.y = y ? y : -this.size;
 	}
