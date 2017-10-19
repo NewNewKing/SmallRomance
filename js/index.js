@@ -9,19 +9,7 @@
 			this.bgCtx = document.querySelector('#bg').getContext('2d');
 			this.titleCtx = document.querySelector('#title').getContext('2d');
 
-			this.snowCtx = document.querySelector('#snow').getContext('2d');			
-
-			// 测试代码
-			const shape = new Shape();
-			shape.write({words:'圣诞节快乐',size:70});
-			const dots = shape.getShape({minSize:5,maxSize:8,mini:10});
-			// this.titleCtx.drawImage(shape.canvas,0,0,375,667);
-			console.log(dots.length);
-			let i;
-			for(i in dots){
-				dots[i].draw(this.titleCtx);
-			}
-			// 测试代码结束
+			this.snowCtx = document.querySelector('#snow').getContext('2d');						
 
 			//加载图片
 			ImgLoader.load(imgList).then(imgs => {
@@ -47,6 +35,18 @@
 		}
 
 		init(){
+			// 测试代码
+			const shape = new Shape();
+			shape.write({words:'圣诞节快乐',size:70});
+			const dots = shape.getShape({minSize:5,maxSize:8,mini:10});
+			// this.titleCtx.drawImage(shape.canvas,0,0,375,667);
+			console.log(dots.length);
+			let i;
+			for(i in dots){
+				dots[i].draw(this.titleCtx);
+			}
+			// 测试代码结束
+
 			const bg = this.imgs.bg2;
 			const snowflake = this.imgs.snowflake;
 
