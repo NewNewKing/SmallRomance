@@ -2,9 +2,10 @@
 
 //下心心
 class Heart extends Snowflake{
-	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1} = {}) {
+	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1,stop} = {}) {
 		super({minSize,maxSize,x,y,size,speed});
 		this.color = `hsla(${random() * 360}, 90%, 65%, 1)`;
+		this.stop = stop;
 	}
 	draw(ctx){
 		ctx.save();
@@ -21,5 +22,9 @@ class Heart extends Snowflake{
 		ctx.closePath();
 		ctx.fill();
 		ctx.restore();
+	}
+	update(){
+		this.x -= Math.sin(Math.random() * 3.142);
+        this.y -= Math.sin(Math.random() * 3.142);
 	}
 }
