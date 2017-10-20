@@ -13,26 +13,27 @@ class Shape{
    	 	
 	}
 
-	write({words,size = 50,fontFamily = 'sans-serif'} = {}){
+	//写入想要渲染的字
+	write({words,size=50,fontFamily='sans-serif'} = {}){
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.font = `bold ${size}px ${fontFamily}`;
 		this.ctx.fillText(words,this.canvas.width / 2,100);
 	}
 
-	getShape({mini=30,minSize=8,maxSize=10} = {}){
+
+	//获取字的坐标点集合。
+	getDots({mini=30,minSize=8,maxSize=10} = {}){
 		const data = this.ctx.getImageData(0,50,this.canvas.width,150).data;
 		let dots = [],x = 0, y = 50,count = 0;
 		for(let i = 0,len = data.length;i <= len ;i+=4){
 			if(data[i+3] > 0){
-				++count % mini == 0 && dots.push(new HeartParticles({x,y,minSize,maxSize}));
+				++count % mini == 0 && dots.push(new Heart({x,y,minSize,maxSize}));
 			}
 			if(++x > this.canvas.width){
 				x = 1;
 				++y;
 			}
 		}
-
-
 		return dots;
 	}
 
