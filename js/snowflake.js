@@ -8,7 +8,7 @@ class Snowflake extends Particle{
 		this.color = color;
 	}
 
-	drop(){
+	fall(){
 		this.x += random() * this.direction;
 		this.y += this.speed;
 	}	
@@ -18,6 +18,7 @@ class Snowflake extends Particle{
 		this.g.addColorStop(0, `hsla(255,255%,255%,${this.opacity})`);
 		this.g.addColorStop(1, 'hsla(255,255%,255%,0)');
 		ctx.beginPath();
+		// ctx.fillStyle = '#fff';
 		ctx.fillStyle = this.g;
 		ctx.arc(this.x,this.y,this.size,0,2 * Math.PI,false);
 		ctx.fill();

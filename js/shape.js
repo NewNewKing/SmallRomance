@@ -22,22 +22,20 @@ class Shape{
 
 
 	//获取字的坐标点集合。
-	getDots({mini=30,minSize=8,maxSize=10} = {}){
+	getDots({mini=30,minSize=8,maxSize=10,size,gap=4} = {}){
 		const data = this.ctx.getImageData(0,50,this.canvas.width,150).data;
 		let dots = [],x = 0, y = 50,count = 0;
-		for(let i = 0,len = data.length;i <= len ;i+=4){
+		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
 			if(data[i+3] > 0){
-				++count % mini == 0 && dots.push(new Heart({x,y,minSize,maxSize}));
+				++count % mini == 0 && dots.push(new Heart({x,y,minSize,maxSize,size}));
 			}
-			if(++x > this.canvas.width){
-				x = 1;
-				++y;
+			x += gap;
+			if(x >= this.canvas.width){
+				x = 0;
+				y += gap;
+				i += gap * 4 * this.canvas.width;
 			}
 		}
 		return dots;
 	}
-
-
-
-
 }

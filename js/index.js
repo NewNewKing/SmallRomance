@@ -21,7 +21,7 @@
 			//获取画笔
 			this.bgCtx = document.querySelector('#bg').getContext('2d');
 			this.titleCtx = document.querySelector('#title').getContext('2d');
-			this.snowCtx = document.querySelector('#snow').getContext('2d');						
+			this.dropCtx = document.querySelector('#snow').getContext('2d');						
 
 			//飘落微粒的数组
 			this.dropDots = [];
@@ -62,21 +62,26 @@
 		}
 		test(){
 			const shape = new Shape();
-			shape.write({words:'圣诞节快乐',size:70});
-			const dots = shape.getDots({minSize:5,maxSize:8,mini:10});
+			shape.write({words:'敬请期待!',size:85});
+			// const dots = shape.getDots({minSize:5,maxSize:8,mini:10});
+			this.dots = shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
 			// this.titleCtx.drawImage(shape.canvas,0,0,375,667);
-			console.log(dots.length);
-			let i;
-			for(i in dots){
-				dots[i].draw(this.titleCtx);
-			}
+			// console.log(this.dots.length);
+			// let i;
+			// for(i in this.dots){
+			// 	this.dots[i].draw(this.titleCtx);
+			// }
+			console.log(this.dots.length);
 		}		
 		//动画效果
 		loop(){
 			//下一帧继续调用loop;
 			requestAnimationFrame(this.loop.bind(this));
+			console.time('label');
+ 
 			// 清空画布
-			this.snowCtx.clearRect(0,0,this.width,this.height);
+			this.dropCtx.clearRect(0,0,this.width,this.height);
+			// this.cacheCtx.clearRect(0,0,this.width,this.height);
 
 			// 控制雪花产生速度
 			++this.time >= 60000 ? 0 : this.time;
@@ -84,22 +89,21 @@
 			this.dropType == 'snow' && this.time % 60 == 0 && this.dropDots.push(new Snowflake());
 			this.dropType == 'heart' && this.time % 15 == 0 && this.dropDots.push(new Heart());
 
-
-			//执行雪花飘落
-			for(j in this.dropDots){
+			//雪花飘落
+			for(j = 0;j < this.dropDots.length;++j){
 				item = this.dropDots[j];
-				item.drop();
-				item.outOfBounds() && this.dropDots.splice(j,1);
-				item.draw(this.snowCtx);
+				item.fall();
+				item.outOfBounds() && this.dropDots.splice(j,1) && --j;
+				item.draw(this.dropCtx);
 			}
-
-			// for(j = 0;j < that.dots.length;j++){
-
-			// }
-			// for(j in that.dots){
-			// 	item = that.dots[j];
-			// 	item.draw(that.snowCtx);
-			// }	
+			
+			//文字的动作
+			for(j in this.dots){
+				item = this.dots[j];
+				item.draw(this.dropCtx);
+			}	
+			// this.dropCtx.drawImage(this.cache,0,0,this.width,this.height);
+			console.timeEnd('label');
 		}
 
 		//画背景
