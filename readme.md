@@ -25,3 +25,6 @@
 * 积雪
 * 星星
 * 环境因素（风）
+
+
+**licensed under MIT LISENCE**
