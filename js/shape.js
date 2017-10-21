@@ -1,3 +1,4 @@
+import Heart from './heart'
 class Shape{
 	constructor() {
 		// 缓存画布
@@ -39,3 +40,5 @@ class Shape{
 		return dots;
 	}
 }
+
+export default Shape

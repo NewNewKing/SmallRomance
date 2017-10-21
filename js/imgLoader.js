@@ -23,3 +23,5 @@ class ImgLoader{
 		return Promise.all(promises);
 	}
 }
+
+export default ImgLoader

@@ -1,3 +1,12 @@
+// 读取图片
+import imgList from '../config/imgList'
+import ImgLoader from './imgLoader'
+
+import Snowflake from './snowflake'
+import Heart from './heart'
+import tree from './tree'
+import Shape from './shape'
+
 (function(){
 	let j = 0,item = null;
 
@@ -77,7 +86,7 @@
 		loop(){
 			//下一帧继续调用loop;
 			requestAnimationFrame(this.loop.bind(this));
-			console.time('label');
+			// console.time('label');
  
 			// 清空画布
 			this.dropCtx.clearRect(0,0,this.width,this.height);
@@ -94,16 +103,18 @@
 				item = this.dropDots[j];
 				item.fall();
 				item.outOfBounds() && this.dropDots.splice(j,1) && --j;
-				item.draw(this.dropCtx);
+				item.render(this.dropCtx);
 			}
 			
+			tree.render(this.titleCtx);
+
 			//文字的动作
 			for(j in this.dots){
 				item = this.dots[j];
-				item.draw(this.dropCtx);
+				item.render(this.dropCtx);
 			}	
 			// this.dropCtx.drawImage(this.cache,0,0,this.width,this.height);
-			console.timeEnd('label');
+			// console.timeEnd('label');
 		}
 
 		//画背景

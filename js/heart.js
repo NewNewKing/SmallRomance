@@ -1,5 +1,5 @@
-// const random = Math.random;
-
+const random = Math.random;
+import Snowflake from './snowflake'
 //下心心
 class Heart extends Snowflake{
 	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1,stop} = {}) {
@@ -7,7 +7,7 @@ class Heart extends Snowflake{
 		this.color = `hsla(${random() * 360}, 90%, 65%, 1)`;
 		this.stop = stop;
 	}
-	draw(ctx){
+	render(ctx){
 		ctx.save();
 		ctx.beginPath();
 		ctx.fillStyle = this.color;
@@ -28,3 +28,5 @@ class Heart extends Snowflake{
         this.y -= Math.sin(Math.random() * 3.142);
 	}
 }
+
+export default Heart

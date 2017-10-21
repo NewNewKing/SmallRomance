@@ -1,0 +1,22 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "animation made by canvas, \r open index.html to view the project,\r or visit [this website](https://newnewking.github.io/MerryChristmas/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NewNewKing/MerryChristmas.git"
+  },
+  "author": "wangxingxin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NewNewKing/MerryChristmas/issues"
+  },
+  "homepage": "https://github.com/NewNewKing/MerryChristmas#readme",
+  "devDependencies": {
+    "webpack": "^3.8.1"
+  }
+}
