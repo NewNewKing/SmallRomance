@@ -1,3 +1,7 @@
+/**
+* version v0.1
+*/
+
 // 读取图片
 import imgList from '../config/imgList'
 import ImgLoader from './imgLoader'
