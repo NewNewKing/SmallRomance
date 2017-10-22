@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,7 +68,25 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(5);
+const config = (function(){
+	return {
+		width:375,
+		height:667,
+		random({min = 0,max} = {}){
+			return min + (max - min) * Math.random();
+		},
+		skyColor:'hsla(210, 60%, {skyColor}, 0.2)'
+	}
+})();
+
+/* harmony default export */ __webpack_exports__["a"] = (config);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(6);
 const random = Math.random;
 //下的雪花继承微粒类
 
@@ -88,6 +106,9 @@ class Snowflake extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default *
 	}	
 
 	render(ctx){
+		this.fall();
+		if(this.outOfBounds()) return false;
+		
 		this.g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
 		this.g.addColorStop(0, `hsla(255,255%,255%,${this.opacity})`);
 		this.g.addColorStop(1, 'hsla(255,255%,255%,0)');
@@ -96,27 +117,30 @@ class Snowflake extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default *
 		ctx.fillStyle = this.g;
 		ctx.arc(this.x,this.y,this.size,0,2 * Math.PI,false);
 		ctx.fill();
+		return true;
 	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Snowflake);
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__snowflake__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__snowflake__ = __webpack_require__(1);
 const random = Math.random;
 
 //下心心
 class Heart extends __WEBPACK_IMPORTED_MODULE_0__snowflake__["a" /* default */]{
-	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1,stop} = {}) {
+	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1} = {}) {
 		super({minSize,maxSize,x,y,size,speed});
 		this.color = `hsla(${random() * 360}, 90%, 65%, 1)`;
-		this.stop = stop;
 	}
 	render(ctx){
+		this.fall();
+		if(this.outOfBounds()) return false;
+
 		ctx.save();
 		ctx.beginPath();
 		ctx.fillStyle = this.color;
@@ -131,28 +155,34 @@ class Heart extends __WEBPACK_IMPORTED_MODULE_0__snowflake__["a" /* default */]{
 		ctx.closePath();
 		ctx.fill();
 		ctx.restore();
-	}
-	update(){
-		this.x -= Math.sin(Math.random() * 3.142);
-        this.y -= Math.sin(Math.random() * 3.142);
+
+		return true;
 	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Heart);
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_imgList__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__imgLoader__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__snowflake__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__heart__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tree__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shape__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_imgList__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__imgLoader__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__snowflake__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__heart__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tree__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shape__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fireworks__ = __webpack_require__(9);
+/**
+* version v0.1
+*/
+
+
 // 读取图片
+
 
 
 
@@ -167,7 +197,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	class Canvas {
 		constructor(){
 			//加载图片
-			__WEBPACK_IMPORTED_MODULE_1__imgLoader__["a" /* default */].load(__WEBPACK_IMPORTED_MODULE_0__config_imgList__["a" /* default */]).then(imgs => {
+			__WEBPACK_IMPORTED_MODULE_2__imgLoader__["a" /* default */].load(__WEBPACK_IMPORTED_MODULE_1__config_imgList__["a" /* default */]).then(imgs => {
 				document.querySelector('#loading').style.display = 'none';
 				this.imgs = this.dealImgs(imgs);				
 				this.init();
@@ -178,18 +208,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		//创建本例属性
 		createProperty(){
 			//画布宽高
-			this.height = 667;
-			this.width = 375;
+			this.height = __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height;
+			this.width = __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height;
 
 			//获取画笔
 			this.bgCtx = document.querySelector('#bg').getContext('2d');
 			this.titleCtx = document.querySelector('#title').getContext('2d');
+
 			this.dropCtx = document.querySelector('#snow').getContext('2d');						
+
+
 
 			//飘落微粒的数组
 			this.dropDots = [];
 			//飘落的类型('snow','heart')
 			this.dropType = "snow";
+
+			//烟花的数组
+			this.fireworkTime = __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({min:30,max:120});
+			this.fireworks = [];
 
 			//字的数组
 			this.wordsList = [];
@@ -204,8 +241,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		//创建缓存画布
 		createCacheCanvas(){
 			this.cache = document.createElement('canvas');
-			this.cache.width = 375;
-			this.cache.height = 667;
+			this.cache.width = this.width;
+			this.cache.height = this.height;
 			this.cacheCtx = this.cache.getContext('2d');
 		}
 		init(){
@@ -224,53 +261,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		}
 		test(){
-			const shape = new __WEBPACK_IMPORTED_MODULE_5__shape__["a" /* default */]();
+			const shape = new __WEBPACK_IMPORTED_MODULE_6__shape__["a" /* default */]();
 			shape.write({words:'敬请期待!',size:85});
-			// const dots = shape.getDots({minSize:5,maxSize:8,mini:10});
 			this.dots = shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
-			// this.titleCtx.drawImage(shape.canvas,0,0,375,667);
-			// console.log(this.dots.length);
-			// let i;
-			// for(i in this.dots){
-			// 	this.dots[i].draw(this.titleCtx);
-			// }
-			console.log(this.dots.length);
 		}		
 		//动画效果
 		loop(){
 			//下一帧继续调用loop;
 			requestAnimationFrame(this.loop.bind(this));
-			// console.time('label');
+			console.time('label');
  
 			// 清空画布
 			this.dropCtx.clearRect(0,0,this.width,this.height);
-			// this.cacheCtx.clearRect(0,0,this.width,this.height);
+			this.titleCtx.clearRect(0,0,this.width,this.height);
 
 			// 控制雪花产生速度
 			++this.time >= 60000 ? 0 : this.time;
-			this.time % 15 == 0 && this.dropDots.push(new __WEBPACK_IMPORTED_MODULE_3__heart__["a" /* default */]())
-			this.dropType == 'snow' && this.time % 60 == 0 && this.dropDots.push(new __WEBPACK_IMPORTED_MODULE_2__snowflake__["a" /* default */]());
-			this.dropType == 'heart' && this.time % 15 == 0 && this.dropDots.push(new __WEBPACK_IMPORTED_MODULE_3__heart__["a" /* default */]());
+			this.time % 15 == 0 && this.dropDots.push(new __WEBPACK_IMPORTED_MODULE_4__heart__["a" /* default */]())
+			this.dropType == 'snow' && this.time % 60 == 0 && this.dropDots.push(new __WEBPACK_IMPORTED_MODULE_3__snowflake__["a" /* default */]());
+			this.dropType == 'heart' && this.time % 15 == 0 && this.dropDots.push(new __WEBPACK_IMPORTED_MODULE_4__heart__["a" /* default */]());
 
 			//雪花飘落
-			for(j = 0;j < this.dropDots.length;++j){
-				item = this.dropDots[j];
-				item.fall();
-				item.outOfBounds() && this.dropDots.splice(j,1) && --j;
-				item.render(this.dropCtx);
+			for(j = this.dropDots.length - 1;j >= 0;--j){
+				!this.dropDots[j].render(this.dropCtx) && this.dropDots.splice(j,1);
 			}
-			
-			__WEBPACK_IMPORTED_MODULE_4__tree__["a" /* default */].render(this.titleCtx);
+						
+			//渲染烟花
+			this.createFireworks();
+			for(j = this.fireworks.length - 1;j >= 0;--j){
+				!this.fireworks[j].render(this.titleCtx) && this.fireworks.splice(j,1);
+			}
+
+			__WEBPACK_IMPORTED_MODULE_5__tree__["a" /* default */].render(this.titleCtx);
 
 			//文字的动作
 			for(j in this.dots){
 				item = this.dots[j];
 				item.render(this.dropCtx);
 			}	
-			// this.dropCtx.drawImage(this.cache,0,0,this.width,this.height);
-			// console.timeEnd('label');
+			console.timeEnd('label');
 		}
-
+		createFireworks(){
+			if(--this.fireworkTime <= 0){
+				this.fireworks.push(new __WEBPACK_IMPORTED_MODULE_7__fireworks__["a" /* default */]({ctx:this.titleCtx}));
+				this.fireworkTime = __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({min:30,max:120});
+			}
+		}
 		//画背景
 		drawBg({ctx,img}){
 			ctx.drawImage(img,0,0,this.width,this.height);
@@ -291,7 +327,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 })();
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -303,7 +339,7 @@ const imgList = {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -336,38 +372,61 @@ class ImgLoader{
 /* harmony default export */ __webpack_exports__["a"] = (ImgLoader);
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const random = Math.random;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global_js__ = __webpack_require__(0);
+
 
 //微粒类
 class Particle {
 	constructor({x,y,minSize = 5,maxSize = 7.5,size,opacity = 1} =  {}){
-		this.size = size ? size : minSize + ( maxSize - minSize ) * random();
-		this.x = x ? x : (375 - this.size) * random();
+		this.size = size ? size : __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].random({max:maxSize,min:minSize});
+		this.x = x ? x : __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].random({max:__WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].width  - this.size});
 		this.y = y ? y : -this.size;
 		this.opacity = opacity;
 	}
 
-	outOfBounds ({height = 667,width = 375} = {}){
+	outOfBounds ({height = __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].height,width = __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].width} = {}){
 		if(this.x >= -this.size && this.x <= width && this.y <= height && this.y >= -this.size){
 			return false;
 		}else{
 			return true;
 		}
 	}
+
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Particle);
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__heart__ = __webpack_require__(1);
+/**
+ *  create by miaoyu  2017/10/22 
+ */
+// test v0.1
+const tree = (function(){
+
+	return {
+		render(ctx){
+
+		}
+	}
+})()
+
+/* harmony default export */ __webpack_exports__["a"] = (tree);
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wordParticle__ = __webpack_require__(11);
 
 class Shape{
 	constructor() {
@@ -398,7 +457,7 @@ class Shape{
 		let dots = [],x = 0, y = 50,count = 0;
 		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
 			if(data[i+3] > 0){
-				++count % mini == 0 && dots.push(new __WEBPACK_IMPORTED_MODULE_0__heart__["a" /* default */]({x,y,minSize,maxSize,size}));
+				++count % mini == 0 && dots.push(new __WEBPACK_IMPORTED_MODULE_0__wordParticle__["a" /* default */]({x,y,minSize,maxSize,size}));
 			}
 			x += gap;
 			if(x >= this.canvas.width){
@@ -414,21 +473,164 @@ class Shape{
 /* harmony default export */ __webpack_exports__["a"] = (Shape);
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const tree = (function(){
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(10);
 
-	return {
-		render(ctx){
 
+class Firework {
+	constructor({ctx,color,x,y = __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height,xEnd,yEnd,size = 2,circle = 2,velocity = 3,opacity = 1,count=300,wait} = {}){
+
+		this.x = x ? x : __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({max:__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].width * 7 / 8,min:__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].width / 8});
+		this.y = y;
+		this.size = size;
+		this.circle = circle;
+		this.xEnd = xEnd ? xEnd : this.x;
+		this.yEnd = yEnd ? yEnd : __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({min:__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height/8,max:3*__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height/8});
+
+		this.velocity = -Math.abs(velocity);
+		this.status = 1;
+		this.color = color ? color : `hsla(${360 * Math.random()},80%,60%,1)`;
+		this.wait = wait ? wait : __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({min:30,max:60});
+		this.count = count;
+		this.particles = [];
+
+		this.ctx = ctx;
+		this.createParticles();
+	}
+	createParticles(){
+		for(let i = 0;i < this.count;++i){
+			this.particles.push(new __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__["a" /* default */]({x:this.xEnd,y:this.yEnd,circle:this.circle}));
 		}
 	}
-})()
+	render(ctx){
+		switch (this.status){
+			case 1:
+				ctx.save();
+				ctx.beginPath();
+				ctx.globalCompositeOperation = 'lighter';
+				ctx.globalAlpha = this.opacity;
+				ctx.translate(this.x,this.y);
+				ctx.scale(0.8,2.3);
+				ctx.translate(-this.x,-this.y);
+				ctx.fillStyle = this.color;
+				ctx.arc(this.x,this.y,this.size,0,Math.PI * 2,false);
+				ctx.fill();
+				ctx.restore();
+				this.rise();
+				return true;
+			break;
 
-/* harmony default export */ __webpack_exports__["a"] = (tree);
+			case 2:
+				if(--this.wait <= 0){
+					this.opacity = 1;
+					this.status = 3;
+				}
 
+				return true;
+			break;
+
+			case 3:
+				ctx.save();
+				ctx.globalCompositeOperation = 'lighter';
+				ctx.globalAlpha = this.opacity;
+				ctx.fillStyle = this.color;
+				for(let i = 0;i < this.count;++i){
+					this.particles[i].render(this.ctx);
+				}
+				ctx.restore();
+
+				this.opacity -= 0.01;
+				return this.opacity > 0;
+			break;
+		}
+	}
+	rise(){
+		this.y += this.velocity;
+		if(this.y - this.yEnd <= 50){
+			this.opacity = (this.y - this.yEnd) / 50;
+		}
+		if(this.y <= this.yEnd){
+			this.status = 2;
+		}
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Firework);
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(6);
+
+class FireworkParticle extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default */]{
+	constructor({x,y,size = 1,circle}){
+		super({x,y,size});
+		this.rate = Math.random();
+		this.angle = Math.PI * 2 * Math.random();
+		this.vx = circle * Math.cos(this.angle) * this.rate;
+		this.vy = circle * Math.sin(this.angle) * this.rate;
+	}
+
+	go(){
+		this.x += this.vx;
+		this.y += this.vy; 
+		this.vy += 0.02;
+		this.vx *= 0.98;
+		this.vy *= 0.98;
+	}
+
+	render(ctx){
+		this.go();
+		ctx.beginPath();
+		ctx.arc(this.x,this.y,this.size,0,Math.PI * 2,false);
+		ctx.fill();
+	}
+}
+
+
+/* harmony default export */ __webpack_exports__["a"] = (FireworkParticle);
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__heart__ = __webpack_require__(2);
+
+
+class WordParticle extends __WEBPACK_IMPORTED_MODULE_0__heart__["a" /* default */]{
+	constructor({x,y,minSize,maxSize,size}){
+		super({x,y,minSize,maxSize,size});
+	}
+	render(ctx){
+		if(this.outOfBounds()) return false;
+
+		ctx.save();
+		ctx.beginPath();
+		ctx.fillStyle = this.color;
+		ctx.moveTo(this.x + 0.5 * this.size, this.y + 0.3 * this.size);
+		ctx.bezierCurveTo(this.x + 0.1 * this.size, this.y, this.x, 
+                        this.y + 0.6 * this.size, this.x + 0.5 * 
+                        this.size, this.y + 0.9 * this.size);
+        ctx.bezierCurveTo(this.x + 1 * this.size, this.y + 0.6 * 
+                        this.size, this.x + 0.9 * this.size, this.y, 
+                        this.x + 0.5 * this.size,
+                        this.y + 0.3 * this.size);
+		ctx.closePath();
+		ctx.fill();
+		ctx.restore();
+
+		return true;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (WordParticle);
 
 /***/ })
 /******/ ]);
