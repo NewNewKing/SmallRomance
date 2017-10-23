@@ -1,4 +1,5 @@
 import WordParticle from './wordParticle'
+import FireworkParticle from './fireworkParticle'
 class Shape{
 	constructor() {
 		// 缓存画布
@@ -10,25 +11,27 @@ class Shape{
 		this.ctx.fillStyle = 'red';
     	this.ctx.textBaseline = 'middle';
    	 	this.ctx.textAlign = 'center';
-   	 	
-   	 	
 	}
 
 	//写入想要渲染的字
-	write({words,size=50,fontFamily='sans-serif'} = {}){
+	write({words,size=50,fontFamily='sans-serif',x = this.canvas.width / 2,y=100} = {}){
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.font = `bold ${size}px ${fontFamily}`;
-		this.ctx.fillText(words,this.canvas.width / 2,100);
+		this.ctx.fillText(words,x,y);
 	}
 
 
 	//获取字的坐标点集合。
-	getDots({mini=30,minSize=8,maxSize=10,size,gap=4} = {}){
+	getDots({mini=1,minSize=8,maxSize=10,size,gap = 5,type} = {}){
 		const data = this.ctx.getImageData(0,50,this.canvas.width,150).data;
 		let dots = [],x = 0, y = 50,count = 0;
 		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
 			if(data[i+3] > 0){
-				++count % mini == 0 && dots.push(new WordParticle({x,y,minSize,maxSize,size}));
+				if(type == 'firework'){
+					++count % mini == 0 && dots.push(new FireworkParticle({x,y,type:'words'}));
+				}else{
+					++count % mini == 0 && dots.push(new WordParticle({x,y,minSize,maxSize,size}));
+				}		
 			}
 			x += gap;
 			if(x >= this.canvas.width){
