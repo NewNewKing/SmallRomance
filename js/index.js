@@ -64,7 +64,7 @@ import Shape from './shape'
 			this.test();
 
 			//画背景图
-			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
+			// this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
 			//循环体
 			this.loop();
 

@@ -15,8 +15,15 @@
 或者访问[这个网站](https://newnewking.github.io/MerryChristmas/)
 
 ### 开发者调试
-命令行进入该目录 输入webpack
-然后打开index.html预览
+
+```
+yarn install
+```
+
+```
+yarn dev
+```
+
 
 ###TODO
 * 烟花
