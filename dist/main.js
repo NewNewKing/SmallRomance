@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -196,15 +196,60 @@ class Heart extends __WEBPACK_IMPORTED_MODULE_0__snowflake__["a" /* default */]{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(2);
+
+class FireworkParticle extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default */]{
+	constructor({x,y,size = 1,circle = 1,type}){
+		super({x,y,size});
+		this.rate = Math.random();
+		this.angle = Math.PI * 2 * Math.random();
+		this.vx = circle * Math.cos(this.angle) * this.rate;
+		this.vy = circle * Math.sin(this.angle) * this.rate;
+
+		this.type = type;
+		if(this.type == 'words') this.wordsGo();
+	}
+	wordsGo(){
+		this.time = 60;
+	}
+
+	go(){
+		this.x += this.vx;
+		this.y += this.vy; 
+		this.vy += 0.02;
+		this.vx *= 0.98;
+		this.vy *= 0.98;
+	}
+
+	render(ctx){
+		if(this.type == 'words'){
+			(--this.time <= 0 ) && this.go();
+		}else{
+			this.go();
+		}
+		ctx.beginPath();
+		ctx.arc(this.x,this.y,this.size,0,Math.PI * 2,false);
+		ctx.fill();
+	}
+}
+
+
+/* harmony default export */ __webpack_exports__["a"] = (FireworkParticle);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_imgList__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__imgLoader__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_imgList__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__imgLoader__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__snowflake__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__heart__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tree__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shape__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fireworks__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tree__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shape__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fireworks__ = __webpack_require__(11);
 /**
 * version v0.1
 */
@@ -281,28 +326,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.createCacheCanvas();
 
 			//画背景图
-// <<<<<<< HEAD
+
 			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
 
 			//显示烟花文字
 			this.shape = new __WEBPACK_IMPORTED_MODULE_6__shape__["a" /* default */]();
 
-			const words = '大家好|你们都好|万事如意|恭喜发财'		
+			const words = '效果修改中|敬请期待|祝大家|万事如意|心想事成|开发者：|王兴欣&缪宇'		
 			this.showFireworkWords(words.split('|'));
 
 			//测试代码块
 			this.test();
-// =======
-			// this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
-// >>>>>>> ca048cad01ce901c2bb07bd93d5c9f62705622e9
+
 			//循环体
 			this.loop();
 
 		}
 		test(){
 
-			this.shape.write({words:'敬请期待!',size:85});
-			this.dots = this.shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
+			// this.shape.write({words:'敬请期待!',size:85});
+			// this.dots = this.shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
 		}		
 		//动画效果
 		loop(){
@@ -385,7 +428,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 })();
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -397,7 +440,7 @@ const imgList = {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -430,7 +473,7 @@ class ImgLoader{
 /* harmony default export */ __webpack_exports__["a"] = (ImgLoader);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -450,12 +493,12 @@ const tree = (function(){
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wordParticle__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wordParticle__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(4);
 
 
 class Shape{
@@ -505,7 +548,7 @@ class Shape{
 /* harmony default export */ __webpack_exports__["a"] = (Shape);
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -543,12 +586,12 @@ class WordParticle extends __WEBPACK_IMPORTED_MODULE_0__heart__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (WordParticle);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(4);
 
 
 class Firework {
@@ -637,51 +680,6 @@ class Firework {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Firework);
-
-/***/ }),
-/* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(2);
-
-class FireworkParticle extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default */]{
-	constructor({x,y,size = 1,circle = 1,type}){
-		super({x,y,size});
-		this.rate = Math.random();
-		this.angle = Math.PI * 2 * Math.random();
-		this.vx = circle * Math.cos(this.angle) * this.rate;
-		this.vy = circle * Math.sin(this.angle) * this.rate;
-
-		this.type = type;
-		if(this.type == 'words') this.wordsGo();
-	}
-	wordsGo(){
-		this.time = 60;
-	}
-
-	go(){
-		this.x += this.vx;
-		this.y += this.vy; 
-		this.vy += 0.02;
-		this.vx *= 0.98;
-		this.vy *= 0.98;
-	}
-
-	render(ctx){
-		if(this.type == 'words'){
-			(--this.time <= 0 ) && this.go();
-		}else{
-			this.go();
-		}
-		ctx.beginPath();
-		ctx.arc(this.x,this.y,this.size,0,Math.PI * 2,false);
-		ctx.fill();
-	}
-}
-
-
-/* harmony default export */ __webpack_exports__["a"] = (FireworkParticle);
 
 /***/ })
 /******/ ]);
