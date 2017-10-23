@@ -281,6 +281,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.createCacheCanvas();
 
 			//画背景图
+// <<<<<<< HEAD
 			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
 
 			//显示烟花文字
@@ -291,6 +292,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			//测试代码块
 			this.test();
+// =======
+			// this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
+// >>>>>>> ca048cad01ce901c2bb07bd93d5c9f62705622e9
 			//循环体
 			this.loop();
 
@@ -433,12 +437,11 @@ class ImgLoader{
 /**
  *  create by miaoyu  2017/10/22 
  */
-// test v0.1
 const tree = (function(){
 
 	return {
 		render(ctx){
-
+			
 		}
 	}
 })()

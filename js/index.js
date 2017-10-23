@@ -74,6 +74,7 @@ import Firework from './fireworks'
 			this.createCacheCanvas();
 
 			//画背景图
+// <<<<<<< HEAD
 			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
 
 			//显示烟花文字
@@ -84,6 +85,9 @@ import Firework from './fireworks'
 
 			//测试代码块
 			this.test();
+// =======
+			// this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
+// >>>>>>> ca048cad01ce901c2bb07bd93d5c9f62705622e9
 			//循环体
 			this.loop();
 
