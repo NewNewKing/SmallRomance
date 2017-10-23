@@ -342,8 +342,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		}
 		test(){
 
-			this.shape.write({words:'敬请期待!',size:85});
-			this.dots = this.shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
+			// this.shape.write({words:'敬请期待!',size:85});
+			// this.dots = this.shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
 		}		
 		//动画效果
 		loop(){
