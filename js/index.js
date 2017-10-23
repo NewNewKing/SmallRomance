@@ -74,20 +74,16 @@ import Firework from './fireworks'
 			this.createCacheCanvas();
 
 			//画背景图
-// <<<<<<< HEAD
 			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
 
 			//显示烟花文字
 			this.shape = new Shape();
 
-			const words = '大家好|你们都好|万事如意|恭喜发财'		
+			const words = '效果修改中|敬请期待|祝大家|万事如意|心想事成|开发者：|王兴欣&缪宇'		
 			this.showFireworkWords(words.split('|'));
 
 			//测试代码块
 			this.test();
-// =======
-			// this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
-// >>>>>>> ca048cad01ce901c2bb07bd93d5c9f62705622e9
 			//循环体
 			this.loop();
 
