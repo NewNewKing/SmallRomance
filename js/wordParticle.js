@@ -1,13 +1,10 @@
-const random = Math.random;
-import Snowflake from './snowflake'
-//下心心
-class Heart extends Snowflake{
-	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1} = {}) {
-		super({minSize,maxSize,x,y,size,speed});
-		this.color = `hsla(${random() * 360}, 90%, 65%, 1)`;
+import Heart from './heart'
+
+class WordParticle extends Heart{
+	constructor({x,y,minSize,maxSize,size}){
+		super({x,y,minSize,maxSize,size});
 	}
 	render(ctx){
-		this.fall();
 		if(this.outOfBounds()) return false;
 
 		ctx.save();
@@ -29,4 +26,4 @@ class Heart extends Snowflake{
 	}
 }
 
-export default Heart
+export default WordParticle

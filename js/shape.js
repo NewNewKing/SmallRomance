@@ -1,4 +1,4 @@
-import Heart from './heart'
+import WordParticle from './wordParticle'
 class Shape{
 	constructor() {
 		// 缓存画布
@@ -28,7 +28,7 @@ class Shape{
 		let dots = [],x = 0, y = 50,count = 0;
 		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
 			if(data[i+3] > 0){
-				++count % mini == 0 && dots.push(new Heart({x,y,minSize,maxSize,size}));
+				++count % mini == 0 && dots.push(new WordParticle({x,y,minSize,maxSize,size}));
 			}
 			x += gap;
 			if(x >= this.canvas.width){

@@ -17,6 +17,9 @@ class Snowflake extends Particle{
 	}	
 
 	render(ctx){
+		this.fall();
+		if(this.outOfBounds()) return false;
+		
 		this.g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
 		this.g.addColorStop(0, `hsla(255,255%,255%,${this.opacity})`);
 		this.g.addColorStop(1, 'hsla(255,255%,255%,0)');
@@ -25,6 +28,7 @@ class Snowflake extends Particle{
 		ctx.fillStyle = this.g;
 		ctx.arc(this.x,this.y,this.size,0,2 * Math.PI,false);
 		ctx.fill();
+		return true;
 	}
 }
 
