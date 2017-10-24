@@ -199,18 +199,12 @@ class Heart extends __WEBPACK_IMPORTED_MODULE_0__snowflake__["a" /* default */]{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(2);
 
 class FireworkParticle extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default */]{
-	constructor({x,y,size = 1,circle = 1,type}){
+	constructor({x,y,size = 1,circle}){
 		super({x,y,size});
 		this.rate = Math.random();
 		this.angle = Math.PI * 2 * Math.random();
 		this.vx = circle * Math.cos(this.angle) * this.rate;
 		this.vy = circle * Math.sin(this.angle) * this.rate;
-
-		this.type = type;
-		if(this.type == 'words') this.wordsGo();
-	}
-	wordsGo(){
-		this.time = 60;
 	}
 
 	go(){
@@ -222,11 +216,7 @@ class FireworkParticle extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* de
 	}
 
 	render(ctx){
-		if(this.type == 'words'){
-			(--this.time <= 0 ) && this.go();
-		}else{
-			this.go();
-		}
+		this.go();
 		ctx.beginPath();
 		ctx.arc(this.x,this.y,this.size,0,Math.PI * 2,false);
 		ctx.fill();
@@ -249,7 +239,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__heart__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tree__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shape__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fireworks__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fireworks__ = __webpack_require__(12);
 /**
 * version v0.1
 */
@@ -375,7 +365,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				!this.fireworks[j].render(this.fireworkCtx) && this.fireworks.splice(j,1);
 			}
 
-			__WEBPACK_IMPORTED_MODULE_5__tree__["a" /* default */].render(this.titleCtx);
+			// tree.render(this.titleCtx);
 
 			//文字的动作
 			// for(j in this.dots){
@@ -482,14 +472,124 @@ class ImgLoader{
  */
 const tree = (function(){
 
+
+	//
+	const MAX_FLOWER_AGE = 50;
+	//
+	const MAX_GROWTH_TICKS = 15;
+	// 树枝颜色
+	const BRANCH_COLOR = "rgb(101, 67, 33)";
+	// 树枝分叉层数
+	const MAX_BRANCHING = 8;
+	// 树干初始宽度
+	const TRUNK_WIDTH = 12;
+	// 递减因子
+	const BRANCH_SHRINKAGE = 0.8;
+	// 树杈分开度因子
+	const MAX_ANGLE_DELTA = Math.PI / 2;
+	// 动画延迟
+	const DELAY = 0;
+
+	const canvas = document.getElementById("title");
+	// canvas高度
+	const CANVAS_HEIGHT = canvas.height;
+	// canvas宽度
+	const CANVAS_WIDTH = canvas.width;
+
+	// save random to cache
+	const cacheRandom = [];
+
+	let ctx;
+
+
+	const renderBranch = ({ x1, y1, x2, y2, branchWidth }) => {
+		ctx.beginPath();
+		ctx.lineWidth = branchWidth;
+		ctx.strokeStyle="rgb(101, 67, 33)";
+		ctx.moveTo(x1,y1);
+		ctx.lineTo(x2,y2);
+		ctx.stroke();
+	};
+
+	const growBranch = ({ x1, y1, length, angle, depth, branchWidth }) => {
+
+		const x2 = x1 + length * Math.cos(angle);
+		const y2 = y1 + length * Math.sin(angle);
+		renderBranch({ x1, y1, x2, y2, branchWidth });
+
+		const newDepth = depth - 1;
+		if (newDepth == 0) {
+			return
+		}
+
+		// 生成分叉
+		const newBranchWidth = branchWidth * BRANCH_SHRINKAGE;
+
+		// Promise.all(
+			[1,-1].map(direction => {
+
+				// save to cahce
+				const toObject = a => (a ? a : {});
+				cacheRandom[newDepth] = toObject(cacheRandom[newDepth])
+				cacheRandom[newDepth][direction] = cacheRandom[newDepth][direction] ? cacheRandom[newDepth][direction] : {"0":Math.random(), "1":Math.random()}
+
+				const newAngle = angle + MAX_ANGLE_DELTA * (cacheRandom[newDepth][direction][0] * 0.5 * direction);
+				const newLength = length * (BRANCH_SHRINKAGE + cacheRandom[newDepth][direction][1]* (1.0 - BRANCH_SHRINKAGE));
+
+				growBranch({ 
+					x1: x2, 
+					y1: y2, 
+					length: newLength,
+					angle: newAngle, 
+					depth: newDepth, 
+					branchWidth:newBranchWidth 
+				})
+
+				// return new Promise((resolve, reject) => {
+				// 	setTimeout(function() {
+				// 		resolve(
+				// 			growBranch({ 
+				// 				x1: x2, 
+				// 				y1: y2, 
+				// 				length: newLength,
+				// 				angle: newAngle, 
+				// 				depth: newDepth, 
+				// 				branchWidth:newBranchWidth 
+				// 			})
+				// 		)
+				// 	},DELAY)
+				// })
+				
+			})
+		// ).then(() => {console.log('done')})
+
+		
+	}
+
+	const growTree = () => {
+		return growBranch({
+			// 树的出生位置
+			x1: Math.floor(CANVAS_WIDTH / 2),
+			y1: Math.floor(CANVAS_HEIGHT / 1.02),
+			length: 60,
+			depth: MAX_BRANCHING,
+			angle: -Math.PI / 2,
+			branchWidth: TRUNK_WIDTH
+		});
+	}
+
 	return {
-		render(ctx){
-			
+		render(drawPen){
+
+			ctx = drawPen
+			growTree()
+			console.log(cacheRandom)
 		}
 	}
 })()
 
-/* harmony default export */ __webpack_exports__["a"] = (tree);
+
+/* unused harmony default export */ var _unused_webpack_default_export = (tree);
 
 
 /***/ }),
@@ -498,7 +598,7 @@ const tree = (function(){
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wordParticle__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkWords__ = __webpack_require__(11);
 
 
 class Shape{
@@ -519,6 +619,9 @@ class Shape{
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.font = `bold ${size}px ${fontFamily}`;
 		this.ctx.fillText(words,x,y);
+		//记录的当前字的坐标
+		this.x = x;
+		this.y = y;
 	}
 
 
@@ -529,7 +632,7 @@ class Shape{
 		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
 			if(data[i+3] > 0){
 				if(type == 'firework'){
-					++count % mini == 0 && dots.push(new __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__["a" /* default */]({x,y,type:'words'}));
+					++count % mini == 0 && dots.push(new __WEBPACK_IMPORTED_MODULE_1__fireworkWords__["a" /* default */]({x,y,type:'words',xStart:this.x,yStart:this.y}));
 				}else{
 					++count % mini == 0 && dots.push(new __WEBPACK_IMPORTED_MODULE_0__wordParticle__["a" /* default */]({x,y,minSize,maxSize,size}));
 				}		
@@ -590,24 +693,69 @@ class WordParticle extends __WEBPACK_IMPORTED_MODULE_0__heart__["a" /* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fireworkParticle__ = __webpack_require__(4);
+
+class FireworkWords extends __WEBPACK_IMPORTED_MODULE_0__fireworkParticle__["a" /* default */]{
+	constructor({x,y,size = 1,circle = 1,xStart,yStart}){
+		super({x,y,size,circle});
+		this.time = 60;
+		const e = 80;
+		this.dx = (x - xStart) / e;
+		this.dy = (y - yStart) / e;
+		this.xStart = xStart;
+		this.yStart = yStart;
+	}
+
+	go(){
+		this.x += this.vx;
+		this.y += this.vy; 
+		this.vy += 0.02;
+		this.vx *= 0.98;
+		this.vy *= 0.98;
+	}
+
+	show(){
+		this.xStart += this.dx;
+		this.yStart += this.dy;
+	}
+
+	render(ctx){
+		this.show();
+		// (--this.time <= 0 ) && this.go();
+		ctx.beginPath();
+		ctx.arc(this.xStart,this.yStart,this.size,0,Math.PI * 2,false);
+		ctx.fill();
+	}
+}
+
+
+/* harmony default export */ __webpack_exports__["a"] = (FireworkWords);
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(4);
 
 
 class Firework {
-	constructor({ctx,color,x,y = __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height,xEnd,yEnd,size = 2,circle = 1,velocity = 3,opacity = 1,count=100,wait,particles} = {}){
+	constructor({ctx,color,x,y = __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height,xEnd,yEnd,size = 2,circle = 1.2,velocity = 3,opacity = 0.8,count=200,wait,particles} = {}){
+		//自身属性
 		this.x = x ? x : __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({max:__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].width * 7 / 8,min:__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].width / 8});
 		this.y = y;
 		this.xEnd = xEnd ? xEnd : this.x;
 		this.yEnd = yEnd ? yEnd : __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({min:__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height/8,max:3*__WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].height/8});
 		this.size = size;
-		this.circle = circle;
 		this.opacity = opacity;
 		this.velocity = -Math.abs(velocity);
 		this.status = 1;
-		this.color = color ? color : `hsla(${360 * Math.random()},80%,60%,1)`;
 		this.wait = wait ? wait : __WEBPACK_IMPORTED_MODULE_0__config_global__["a" /* default */].random({min:30,max:60});
-
+		
+		this.circle = circle;		
+		this.color = color ? color : `hsla(${360 * Math.random()},80%,60%,1)`;
+		
 		if(!particles){
 			this.count = count;
 			this.particles = [];
