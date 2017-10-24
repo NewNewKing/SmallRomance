@@ -123,7 +123,7 @@ import Firework from './fireworks'
 				!this.fireworks[j].render(this.fireworkCtx) && this.fireworks.splice(j,1);
 			}
 
-			tree.render(this.titleCtx);
+			// tree.render(this.titleCtx);
 
 			//文字的动作
 			// for(j in this.dots){

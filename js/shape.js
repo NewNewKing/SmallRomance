@@ -1,5 +1,5 @@
 import WordParticle from './wordParticle'
-import FireworkParticle from './fireworkParticle'
+import FireworkWords from './fireworkWords'
 class Shape{
 	constructor() {
 		// 缓存画布
@@ -18,6 +18,9 @@ class Shape{
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.font = `bold ${size}px ${fontFamily}`;
 		this.ctx.fillText(words,x,y);
+		//记录的当前字的坐标
+		this.x = x;
+		this.y = y;
 	}
 
 
@@ -28,7 +31,7 @@ class Shape{
 		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
 			if(data[i+3] > 0){
 				if(type == 'firework'){
-					++count % mini == 0 && dots.push(new FireworkParticle({x,y,type:'words'}));
+					++count % mini == 0 && dots.push(new FireworkWords({x,y,type:'words',xStart:this.x,yStart:this.y}));
 				}else{
 					++count % mini == 0 && dots.push(new WordParticle({x,y,minSize,maxSize,size}));
 				}		
