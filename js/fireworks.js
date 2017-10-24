@@ -1,24 +1,30 @@
 import config from '../config/global'
 import FireworkParticle from './fireworkParticle'
 class Firework {
-	constructor({ctx,color,x,y = config.height,xEnd,yEnd,size = 2,circle = 2,velocity = 3,opacity = 1,count=300,wait} = {}){
-
+	constructor({ctx,color,x,y = config.height,xEnd,yEnd,size = 2,circle = 1,velocity = 3,opacity = 1,count=100,wait,particles} = {}){
 		this.x = x ? x : config.random({max:config.width * 7 / 8,min:config.width / 8});
 		this.y = y;
-		this.size = size;
-		this.circle = circle;
 		this.xEnd = xEnd ? xEnd : this.x;
 		this.yEnd = yEnd ? yEnd : config.random({min:config.height/8,max:3*config.height/8});
-
+		this.size = size;
+		this.circle = circle;
+		this.opacity = opacity;
 		this.velocity = -Math.abs(velocity);
 		this.status = 1;
 		this.color = color ? color : `hsla(${360 * Math.random()},80%,60%,1)`;
 		this.wait = wait ? wait : config.random({min:30,max:60});
-		this.count = count;
-		this.particles = [];
 
+		if(!particles){
+			this.count = count;
+			this.particles = [];
+			this.createParticles();
+			this.type = 'normal';
+		}else{
+			this.type = 'words';
+			this.particles = particles;
+		}
 		this.ctx = ctx;
-		this.createParticles();
+		
 	}
 	createParticles(){
 		for(let i = 0;i < this.count;++i){
@@ -36,7 +42,7 @@ class Firework {
 				ctx.scale(0.8,2.3);
 				ctx.translate(-this.x,-this.y);
 				ctx.fillStyle = this.color;
-				ctx.arc(this.x,this.y,this.size,0,Math.PI * 2,false);
+				ctx.arc(this.x + Math.sin(Math.PI * 2 * Math.random())/2,this.y,this.size,0,Math.PI * 2,false);
 				ctx.fill();
 				ctx.restore();
 				this.rise();
@@ -44,11 +50,12 @@ class Firework {
 			break;
 
 			case 2:
+
 				if(--this.wait <= 0){
+
 					this.opacity = 1;
 					this.status = 3;
 				}
-
 				return true;
 			break;
 
@@ -57,7 +64,7 @@ class Firework {
 				ctx.globalCompositeOperation = 'lighter';
 				ctx.globalAlpha = this.opacity;
 				ctx.fillStyle = this.color;
-				for(let i = 0;i < this.count;++i){
+				for(let i = 0;i < this.particles.length;++i){
 					this.particles[i].render(this.ctx);
 				}
 				ctx.restore();
