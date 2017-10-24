@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,7 +68,25 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(5);
+const config = (function(){
+	return {
+		width:375,
+		height:667,
+		random({min = 0,max} = {}){
+			return min + (max - min) * Math.random();
+		},
+		skyColor:'hsla(210, 60%, {skyColor}, 0.2)'
+	}
+})();
+
+/* harmony default export */ __webpack_exports__["a"] = (config);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(2);
 const random = Math.random;
 //下的雪花继承微粒类
 
@@ -106,11 +124,40 @@ class Snowflake extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (Snowflake);
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__snowflake__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global_js__ = __webpack_require__(0);
+
+
+//微粒类
+class Particle {
+	constructor({x,y,minSize = 5,maxSize = 7.5,size,opacity = 1} =  {}){
+		this.size = size ? size : __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].random({max:maxSize,min:minSize});
+		this.x = x ? x : __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].random({max:__WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].width  - this.size});
+		this.y = y ? y : -this.size;
+		this.opacity = opacity;
+	}
+
+	outOfBounds ({height = __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].height,width = __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].width} = {}){
+		if(this.x >= -this.size && this.x <= width && this.y <= height && this.y >= -this.size){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Particle);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__snowflake__ = __webpack_require__(1);
 const random = Math.random;
 
 //下心心
@@ -145,18 +192,18 @@ class Heart extends __WEBPACK_IMPORTED_MODULE_0__snowflake__["a" /* default */]{
 /* harmony default export */ __webpack_exports__["a"] = (Heart);
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_imgList__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__imgLoader__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__snowflake__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__heart__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tree__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shape__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config_imgList__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__imgLoader__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__snowflake__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__heart__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tree__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shape__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fireworks__ = __webpack_require__(10);
 /**
 * version v0.1
@@ -251,7 +298,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		loop(){
 			//下一帧继续调用loop;
 			requestAnimationFrame(this.loop.bind(this));
-			console.time('label');
+			// console.time('label');
  
 			// 清空画布
 			this.dropCtx.clearRect(0,0,this.width,this.height);
@@ -281,7 +328,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				item = this.dots[j];
 				item.render(this.dropCtx);
 			}	
-			console.timeEnd('label');
+			// console.timeEnd('label');
 		}
 		createFireworks(){
 			if(--this.fireworkTime <= 0){
@@ -309,7 +356,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 })();
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -321,7 +368,7 @@ const imgList = {
 
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -354,36 +401,7 @@ class ImgLoader{
 /* harmony default export */ __webpack_exports__["a"] = (ImgLoader);
 
 /***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global_js__ = __webpack_require__(8);
-
-
-//微粒类
-class Particle {
-	constructor({x,y,minSize = 5,maxSize = 7.5,size,opacity = 1} =  {}){
-		this.size = size ? size : __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].random({max:maxSize,min:minSize});
-		this.x = x ? x : __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].random({max:__WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].width  - this.size});
-		this.y = y ? y : -this.size;
-		this.opacity = opacity;
-	}
-
-	outOfBounds ({height = __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].height,width = __WEBPACK_IMPORTED_MODULE_0__config_global_js__["a" /* default */].width} = {}){
-		if(this.x >= -this.size && this.x <= width && this.y <= height && this.y >= -this.size){
-			return false;
-		}else{
-			return true;
-		}
-	}
-
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Particle);
-
-/***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -394,16 +412,22 @@ const tree = (function(){
 
 	return {
 		render(ctx){
-			
+
+			ctx.strokeStyle="#FF0000";
+			ctx.moveTo(0,0);
+			ctx.lineTo(200,100);
+			ctx.stroke();
+
 		}
 	}
 })()
+
 
 /* harmony default export */ __webpack_exports__["a"] = (tree);
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -454,29 +478,11 @@ class Shape{
 /* harmony default export */ __webpack_exports__["a"] = (Shape);
 
 /***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-const config = (function(){
-	return {
-		width:375,
-		height:667,
-		random({min = 0,max} = {}){
-			return min + (max - min) * Math.random();
-		},
-		skyColor:'hsla(210, 60%, {skyColor}, 0.2)'
-	}
-})();
-
-/* harmony default export */ __webpack_exports__["a"] = (config);
-
-/***/ }),
 /* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__heart__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__heart__ = __webpack_require__(3);
 
 
 class WordParticle extends __WEBPACK_IMPORTED_MODULE_0__heart__["a" /* default */]{
@@ -512,7 +518,7 @@ class WordParticle extends __WEBPACK_IMPORTED_MODULE_0__heart__["a" /* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_global__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fireworkParticle__ = __webpack_require__(11);
 
 
@@ -601,7 +607,7 @@ class Firework {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particle__ = __webpack_require__(2);
 
 class FireworkParticle extends __WEBPACK_IMPORTED_MODULE_0__particle__["a" /* default */]{
 	constructor({x,y,size = 1,circle}){

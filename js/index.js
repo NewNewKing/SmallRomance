@@ -91,7 +91,7 @@ import Firework from './fireworks'
 		loop(){
 			//下一帧继续调用loop;
 			requestAnimationFrame(this.loop.bind(this));
-			console.time('label');
+			// console.time('label');
  
 			// 清空画布
 			this.dropCtx.clearRect(0,0,this.width,this.height);
@@ -121,7 +121,7 @@ import Firework from './fireworks'
 				item = this.dots[j];
 				item.render(this.dropCtx);
 			}	
-			console.timeEnd('label');
+			// console.timeEnd('label');
 		}
 		createFireworks(){
 			if(--this.fireworkTime <= 0){
