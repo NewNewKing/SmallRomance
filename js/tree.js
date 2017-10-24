@@ -27,7 +27,10 @@ const tree = (function(){
 	// canvas宽度
 	const CANVAS_WIDTH = canvas.width;
 
-	let ctx = null;
+	// save random to cache
+	const cacheRandom = [];
+
+	let ctx;
 
 
 	const renderBranch = ({ x1, y1, x2, y2, branchWidth }) => {
@@ -55,8 +58,14 @@ const tree = (function(){
 
 		// Promise.all(
 			[1,-1].map(direction => {
-				const newAngle = angle + MAX_ANGLE_DELTA * (Math.random() * 0.5 * direction);
-				const newLength = length * (BRANCH_SHRINKAGE + Math.random() * (1.0 - BRANCH_SHRINKAGE));
+
+				// save to cahce
+				const toObject = a => (a ? a : {});
+				cacheRandom[newDepth] = toObject(cacheRandom[newDepth])
+				cacheRandom[newDepth][direction] = cacheRandom[newDepth][direction] ? cacheRandom[newDepth][direction] : {"0":Math.random(), "1":Math.random()}
+
+				const newAngle = angle + MAX_ANGLE_DELTA * (cacheRandom[newDepth][direction][0] * 0.5 * direction);
+				const newLength = length * (BRANCH_SHRINKAGE + cacheRandom[newDepth][direction][1]* (1.0 - BRANCH_SHRINKAGE));
 
 				growBranch({ 
 					x1: x2, 
@@ -102,9 +111,10 @@ const tree = (function(){
 
 	return {
 		render(drawPen){
+
 			ctx = drawPen
 			growTree()
-
+			console.log(cacheRandom)
 		}
 	}
 })()
