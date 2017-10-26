@@ -31,7 +31,7 @@ import Firework from './fireworks'
 		createProperty(){
 			//画布宽高
 			this.height = config.height;
-			this.width = config.height;
+			this.width = config.width;
 
 			//获取画笔
 			this.bgCtx = document.querySelector('#bg').getContext('2d');
