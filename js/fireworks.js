@@ -33,6 +33,9 @@ class Firework {
 			this.particles.push(new FireworkParticle({x:this.xEnd,y:this.yEnd,circle:this.circle}));
 		}
 	}
+	getOpacity(){
+		return this.status == 3 ? this.opacity : 0;
+	}
 	render(ctx){
 		switch (this.status){
 			case 1:
