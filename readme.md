@@ -2,12 +2,15 @@
 
 ### 目录结构
 
-* config --配置文件主要为需要加载的img列表
 * dist  --打包后的文件
-* img  --img文件
-* js --img文件
+ - index.html 打包后的index文件 直接打开即可看到内容
+ - js 打包后的js文件
 * node_modules 
-* index.html --主页面
+* src
+ - config --配置文件主要为需要加载的img列表
+ - img  --img文件
+ - js --js文件
+* index.html --模版主页面
 * webpack.config.js
 
 ### 快速预览
@@ -26,7 +29,6 @@ yarn dev
 
 
 ###TODO
-* 烟花
 * 树
 * 月亮
 * 积雪
