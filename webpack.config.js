@@ -9,12 +9,32 @@ module.exports = {
 		path:path.resolve(__dirname,'./dist'),
 		filename:'js/[name].js'
 	},
+	devServer:{
+		contentBase:'./dist',
+		port:8888,
+		open:true,
+		host:'127.0.0.1'
+	},
+	module:{
+		rules:[
+			{
+				test:/\.js$/,
+				loader:'babel-loader'
+			},
+			{
+				test:/\.(png|jpe?g|gif|svg)/,
+				loader:'file-loader',
+				options:{
+					name:'[path][name].[ext]'
+				}
+			}
+		]
+	},
 	resolve:{
 		extensions: ['.js']
 	},
 	plugins:[
 		new HtmlWebpackPlugin({
-			filename:'index.html',
 			template:'index.html',
 			inject:true,
 		})

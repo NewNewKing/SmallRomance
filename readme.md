@@ -14,17 +14,16 @@
 * webpack.config.js
 
 ### 快速预览
-直接打开index.html即可预览
-或者访问[这个网站](https://newnewking.github.io/MerryChristmas/)
+访问[这个网站](https://newnewking.github.io/MerryChristmas/)
 
 ### 开发者调试
 
 ```
-yarn install
+npm install
 ```
 
 ```
-yarn dev
+npm run dev
 ```
 
 
@@ -35,5 +34,5 @@ yarn dev
 * 星星
 * 环境因素（风）
 
-
+---
 **licensed under MIT LISENCE**
