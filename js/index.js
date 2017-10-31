@@ -31,20 +31,21 @@ import Firework from './fireworks'
 		createProperty(){
 			//画布宽高
 			this.height = config.height;
-			this.width = config.height;
+			this.width = config.width;
 
 			//获取画笔
 			this.bgCtx = document.querySelector('#bg').getContext('2d');
 			this.fireworkCtx = document.querySelector('#firework').getContext('2d');
 			this.titleCtx = document.querySelector('#title').getContext('2d');
-			this.dropCtx = document.querySelector('#snow').getContext('2d');						
-
-
+			this.fallCtx = document.querySelector('#fall').getContext('2d');						
+			this.mbCtx = document.querySelector('#mb').getContext('2d');
+			this.skyColor = 'hsla(210,60%,%sky%,0.2)';
+			this.skyLight = 0;
 
 			//飘落微粒的数组
-			this.dropDots = [];
+			this.fallDots = [];
 			//飘落的类型('snow','heart')
-			this.dropType = "snow";
+			this.fallType = "snow";
 
 			//烟花的数组
 			this.fireworkTime = config.random({min:30,max:120});
@@ -74,6 +75,7 @@ import Firework from './fireworks'
 			this.createCacheCanvas();
 
 			//画背景图
+
 			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
 
 			//显示烟花文字
@@ -84,6 +86,7 @@ import Firework from './fireworks'
 
 			//测试代码块
 			this.test();
+
 			//循环体
 			this.loop();
 
@@ -100,28 +103,30 @@ import Firework from './fireworks'
 			// console.time('label');
  
 			// 清空画布
-			this.dropCtx.clearRect(0,0,this.width,this.height);
+			this.fallCtx.clearRect(0,0,this.width,this.height);
 			this.fireworkCtx.clearRect(0,0,this.width,this.height);
 			this.titleCtx.clearRect(0,0,this.width,this.height);
-
 			// 控制雪花产生速度
 			++this.time >= 60000 ? 0 : this.time;
-			this.time % 15 == 0 && this.dropDots.push(new Heart())
-			this.dropType == 'snow' && this.time % 60 == 0 && this.dropDots.push(new Snowflake());
-			this.dropType == 'heart' && this.time % 15 == 0 && this.dropDots.push(new Heart());
+			this.time % 15 == 0 && this.fallDots.push(new Heart())
+			this.fallType == 'snow' && this.time % 60 == 0 && this.fallDots.push(new Snowflake());
+			this.fallType == 'heart' && this.time % 15 == 0 && this.fallDots.push(new Heart());
 
 			//雪花飘落
-			for(j = this.dropDots.length - 1;j >= 0;--j){
-				!this.dropDots[j].render(this.dropCtx) && this.dropDots.splice(j,1);
+			for(j = this.fallDots.length - 1;j >= 0;--j){
+				!this.fallDots[j].render(this.fallCtx) && this.fallDots.splice(j,1);
 			}
 						
 			//渲染烟花
 			this.createFireworks();
+			this.skyLight = 0;
 			for(j = this.fireworks.length - 1;j >= 0;--j){
+				this.skyLight = Math.max(this.skyLight,this.fireworks[j].getOpacity());
 				!this.fireworks[j].render(this.fireworkCtx) && this.fireworks.splice(j,1);
 			}
+			this.skyRender();
 
-			tree.render(this.titleCtx);
+			// tree.render(this.titleCtx);
 
 			//文字的动作
 			// for(j in this.dots){
@@ -129,6 +134,13 @@ import Firework from './fireworks'
 			// }	
 			// console.timeEnd('label');
 		}
+		skyRender(){
+			this.mbCtx.clearRect(0,0,this.width,this.height);
+			// console.log(this.skyLight);
+			this.mbCtx.fillStyle = this.skyColor.replace('%sky',5 + this.skyLight * 15);
+			this.mbCtx.fillRect(0,0,this.width,this.height);
+		}
+
 		showFireworkWords(wordsArr){
 			if(wordsArr.length == 0) return ;
 			setTimeout(function(){
@@ -142,10 +154,7 @@ import Firework from './fireworks'
 					this.fireworks.push(new Firework({ctx:this.fireworkCtx,wait:30,circle:2,x,yEnd:100,particles:this.shape.getDots({type:'firework'})}));
 				});
 				this.showFireworkWords(wordsArr);
-			}.bind(this),2000);
-
-			
-			
+			}.bind(this),2000);		
 		}
 		createFireworks(){
 			if(--this.fireworkTime <= 0){
@@ -170,5 +179,4 @@ import Firework from './fireworks'
 	}
 
 	new Canvas();
-
 })();
