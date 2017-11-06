@@ -19,13 +19,14 @@ import Firework from './fireworks'
 	class Canvas {
 		constructor(){
 			//加载图片
-			ImgLoader.load(imgList).then(imgs => {
-				document.querySelector('#loading').style.display = 'none';
-				this.imgs = this.dealImgs(imgs);				
-				this.init();
-			}).catch(err => {
-				console.log(err);
-			});		
+			// ImgLoader.load(imgList).then(imgs => {
+			// 	
+			// 	this.imgs = this.dealImgs(imgs);				
+			// 	this.init();
+			// }).catch(err => {
+			// 	console.log(err);
+			// });	
+			this.init();	
 		}
 		//创建本例属性
 		createProperty(){
@@ -69,14 +70,14 @@ import Firework from './fireworks'
 			this.cacheCtx = this.cache.getContext('2d');
 		}
 		init(){
+			document.querySelector('#loading').style.display = 'none';
 			//创建属性
 			this.createProperty();
 			//创建缓存画布
 			this.createCacheCanvas();
 
 			//画背景图
-
-			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
+			// this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
 
 			//显示烟花文字
 			this.shape = new Shape();
@@ -92,7 +93,6 @@ import Firework from './fireworks'
 
 		}
 		test(){
-
 			// this.shape.write({words:'敬请期待!',size:85});
 			// this.dots = this.shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
 		}		
@@ -101,11 +101,13 @@ import Firework from './fireworks'
 			//下一帧继续调用loop;
 			requestAnimationFrame(this.loop.bind(this));
 			// console.time('label');
- 
+ 		
 			// 清空画布
-			this.fallCtx.clearRect(0,0,this.width,this.height);
-			this.fireworkCtx.clearRect(0,0,this.width,this.height);
-			this.titleCtx.clearRect(0,0,this.width,this.height);
+			// this.fallCtx.clearRect(0,0,this.width,this.height);	
+			// this.titleCtx.clearRect(0,0,this.width,this.height);
+			this.fireworkCtx.fillStyle = this.skyColor.replace('%sky',20);
+			this.fireworkCtx.fillRect(0,0,this.width,this.height);
+			
 			// 控制雪花产生速度
 			++this.time >= 60000 ? 0 : this.time;
 			this.time % 15 == 0 && this.fallDots.push(new Heart())
@@ -113,9 +115,9 @@ import Firework from './fireworks'
 			this.fallType == 'heart' && this.time % 15 == 0 && this.fallDots.push(new Heart());
 
 			//雪花飘落
-			for(j = this.fallDots.length - 1;j >= 0;--j){
-				!this.fallDots[j].render(this.fallCtx) && this.fallDots.splice(j,1);
-			}
+			// for(j = this.fallDots.length - 1;j >= 0;--j){
+			// 	!this.fallDots[j].render(this.fallCtx) && this.fallDots.splice(j,1);
+			// }
 						
 			//渲染烟花
 			this.createFireworks();
@@ -124,6 +126,8 @@ import Firework from './fireworks'
 				this.skyLight = Math.max(this.skyLight,this.fireworks[j].getOpacity());
 				!this.fireworks[j].render(this.fireworkCtx) && this.fireworks.splice(j,1);
 			}
+
+
 			this.skyRender();
 
 			// tree.render(this.titleCtx);
@@ -136,7 +140,6 @@ import Firework from './fireworks'
 		}
 		skyRender(){
 			this.mbCtx.clearRect(0,0,this.width,this.height);
-			// console.log(this.skyLight);
 			this.mbCtx.fillStyle = this.skyColor.replace('%sky',5 + this.skyLight * 15);
 			this.mbCtx.fillRect(0,0,this.width,this.height);
 		}
