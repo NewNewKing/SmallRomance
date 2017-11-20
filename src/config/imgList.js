@@ -1,5 +1,5 @@
 const imgList = {
-	bg2:'./img/bg2.jpg',
+	bg2:require('../img/bg2.jpg'),
 	// snowflake:'./img/snowflake.png'
 }
 export default imgList
