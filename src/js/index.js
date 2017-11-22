@@ -81,7 +81,7 @@ import Firework from './fireworks'
 			//显示烟花文字
 			this.shape = new Shape();
 
-			const words = '效果修改中|敬请期待|祝大家|万事如意|心想事成|开发者：|王兴欣&缪宇'		
+			const words = '效果修改中|资金不够|演员未定|剧本暂无|不知道|有没有|之后的故事'		
 			this.showFireworkWords(words.split('|'));
 
 			//测试代码块
