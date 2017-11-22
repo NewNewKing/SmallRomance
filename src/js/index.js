@@ -81,7 +81,7 @@ import Firework from './fireworks'
 			//显示烟花文字
 			this.shape = new Shape();
 
-			const words = '效果修改中|资金不够|演员未定|剧本暂无|不知道|有没有|之后的故事'		
+			const words = '效果修改中|资金不够|演员未定|剧本暂无|不知道|还有没有|之后的故事'		
 			this.showFireworkWords(words.split('|'));
 
 			//测试代码块
