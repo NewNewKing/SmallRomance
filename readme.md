@@ -1,4 +1,4 @@
-# Merry Christmas (Unfinished)
+# Merry Christmas
 
 ### 目录结构
 
@@ -25,14 +25,6 @@ npm install
 ```
 npm run dev
 ```
-
-
-###TODO
-* 树
-* 月亮
-* 积雪
-* 星星
-* 环境因素（风）
 
 ---
 **licensed under MIT LISENCE**

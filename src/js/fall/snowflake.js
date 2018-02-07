@@ -1,14 +1,15 @@
-import config from '../config/global'
-//下的雪花继承微粒类
+import config from '../../config/global.js'
+import util from '../../config/util.js'
+
+// 继承微粒类
 import Particle from './particle'
 
 class Snowflake extends Particle{
-	constructor({x,y,minSize = 5,maxSize = 7.5,size,speed = 0.5,color = '#eee',opacity = 0.8} = {}){
+	constructor({x, y, minSize = 5, maxSize = 7.5, size, speed = 0.5, opacity = 0.8} = {}){
 		super({x,y,minSize,maxSize,size});
-		this.opacity = config.random({min:opacity,max:1});	
+		this.opacity = util.random(opacity, 1);	
 		this.speed = speed * (1 + Math.random());
 		this.direction = Math.random() > 0.5 ? 0.5 : -0.5;
-		this.color = color;
 	}
 
 	fall(){
@@ -18,6 +19,7 @@ class Snowflake extends Particle{
 
 	render(ctx){
 		this.fall();
+
 		if(this.outOfBounds()) return false;
 		
 		this.g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);

@@ -1,6 +1,6 @@
 const random = Math.random;
 import Snowflake from './snowflake'
-//下心心
+
 class Heart extends Snowflake{
 	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1} = {}) {
 		super({minSize,maxSize,x,y,size,speed});

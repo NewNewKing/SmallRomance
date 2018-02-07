@@ -1,4 +1,5 @@
-import Particle from './particle'
+import Particle from '../fall/particle'
+
 class FireworkParticle extends Particle{
 	constructor({x,y,size = 1,circle}){
 		super({x,y,size});

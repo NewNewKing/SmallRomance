@@ -2,59 +2,72 @@
 * version v0.1
 */
 
+// 基础配置
 import config from '../config/global'
+import util from '../config/util'
+import '../js/resize'
+
 // 读取图片
 import imgList from '../config/imgList'
 import ImgLoader from './imgLoader'
 
-import Snowflake from './snowflake'
-import Heart from './heart'
-import tree from './tree'
-import Shape from './shape'
-import Firework from './fireworks'
+// 飘落装饰
+import Snowflake from './fall/snowflake'
+import Heart from './fall/heart'
+
+
+// import tree from './tree'
+// import Shape from './shape'
+import Firework from './fireworks/fireworks'
+
+
 
 (function(){
-	let j = 0,item = null;
-
 	class Canvas {
 		constructor(){
+			//初始化属性
+			this.initProperty();
+
 			//加载图片
 			ImgLoader.load(imgList).then(imgs => {
 				document.querySelector('#loading').style.display = 'none';
-				this.imgs = this.dealImgs(imgs);				
+				//bg
+				this.imgs = this.dealImgs(imgs);
 				this.init();
 			}).catch(err => {
 				console.log(err);
 			});		
 		}
 		//创建本例属性
-		createProperty(){
+		initProperty(){
 			//画布宽高
 			this.height = config.height;
 			this.width = config.width;
 
 			//获取画笔
-			this.bgCtx = document.querySelector('#bg').getContext('2d');
-			this.fireworkCtx = document.querySelector('#firework').getContext('2d');
-			this.titleCtx = document.querySelector('#title').getContext('2d');
-			this.fallCtx = document.querySelector('#fall').getContext('2d');						
-			this.mbCtx = document.querySelector('#mb').getContext('2d');
-			this.skyColor = 'hsla(210,60%,%sky%,0.2)';
-			this.skyLight = 0;
+			//fall、bg、fireworks
+			config.canvases.forEach(canvasId => {
+				this[canvasId + 'Ctx'] = document.querySelector(`#${canvasId}`).getContext('2d');
+			});
+			// this.titleCtx = document.querySelector('#title').getContext('2d');			
+			// this.mbCtx = document.querySelector('#mb').getContext('2d');
+			// this.skyColor = 'hsla(210,60%,%sky%,0.2)';
+			// this.skyLight = 0;
 
-			//飘落微粒的数组
+			// 飘落微粒
 			this.fallDots = [];
-			//飘落的类型('snow','heart')
-			this.fallType = "snow";
+
+			// 飘落的类型('snow', 'heart', 'mix')
+			this.fallType = config.fallType,
 
 			//烟花的数组
-			this.fireworkTime = config.random({min:30,max:120});
+			this.fireworkTime = util.random(...config.fireworkInterval);
 			this.fireworks = [];
 
 			//字的数组
-			this.wordsList = [];
+			// this.wordsList = [];
 			//组成字的微粒数组
-			this.dots = [];
+			// this.dots = [];
 
 			//动画的时间
 			this.time = 0;
@@ -63,41 +76,42 @@ import Firework from './fireworks'
 		}
 		//创建缓存画布
 		createCacheCanvas(){
-			this.cache = document.createElement('canvas');
-			this.cache.width = this.width;
-			this.cache.height = this.height;
-			this.cacheCtx = this.cache.getContext('2d');
+			// this.cache = document.createElement('canvas');
+			// this.cache.width = this.width;
+			// this.cache.height = this.height;
+			// this.cacheCtx = this.cache.getContext('2d');
 		}
 		init(){
-			//创建属性
-			this.createProperty();
-			//创建缓存画布
-			this.createCacheCanvas();
-
 			//画背景图
+			this.drawBg(this.bgCtx, this.imgs.bg);
 
-			this.drawBg({img:this.imgs.bg2,ctx:this.bgCtx});
+
+			//创建缓存画布
+			// this.createCacheCanvas();
 
 			//显示烟花文字
-			this.shape = new Shape();
+			// this.shape = new Shape();
 
-			const words = '效果修改中|资金不够|演员未定|剧本暂无|不知道|还有没有|之后的故事'		
-			this.showFireworkWords(words.split('|'));
+			// const words = '效果修改中|资金不够|演员未定|剧本暂无|不知道|还有没有|之后的故事'		
+			// this.showFireworkWords(words.split('|'));
 
 			//测试代码块
 			this.test();
 
-			//循环体
+			// 循环体
 			this.loop();
 
 		}
 		test(){
 
-			// this.shape.write({words:'敬请期待!',size:85});
-			// this.dots = this.shape.getDots({minSize:4,maxSize:6,mini:1,gap:5});
 		}		
+
+		testLoop(ctx){
+
+		}
 		//动画效果
 		loop(){
+
 			//下一帧继续调用loop;
 			requestAnimationFrame(this.loop.bind(this));
 			// console.time('label');
@@ -105,26 +119,37 @@ import Firework from './fireworks'
 			// 清空画布
 			this.fallCtx.clearRect(0,0,this.width,this.height);
 			this.fireworkCtx.clearRect(0,0,this.width,this.height);
-			this.titleCtx.clearRect(0,0,this.width,this.height);
+			// this.titleCtx.clearRect(0,0,this.width,this.height);
 			// 控制雪花产生速度
 			++this.time >= 60000 ? 0 : this.time;
-			this.time % 15 == 0 && this.fallDots.push(new Heart())
-			this.fallType == 'snow' && this.time % 60 == 0 && this.fallDots.push(new Snowflake());
-			this.fallType == 'heart' && this.time % 15 == 0 && this.fallDots.push(new Heart());
 
-			//雪花飘落
-			for(j = this.fallDots.length - 1;j >= 0;--j){
-				!this.fallDots[j].render(this.fallCtx) && this.fallDots.splice(j,1);
+			// 控制飘落装饰类型
+			switch(this.fallType){
+				case 'snow': this.time % config.snowInterval == 0 && this.fallDots.push(new Snowflake(config.snow));
+				break;
+ 				case 'heart': this.time % config.heartInterval == 0 && this.fallDots.push(new Heart(config.heart));
+ 				break;
+ 				case 'mix': 
+
+ 				this.time % config.snowInterval == 0 && this.fallDots.push(new Snowflake(config.snow));
+ 				this.time % config.heartInterval == 0 && this.fallDots.push(new Heart(config.heart));
+ 				break;
+			}
+
+			let i = 0;
+			// 雪花飘落
+			for(i = this.fallDots.length - 1; i >= 0; --i){
+				!this.fallDots[i].render(this.fallCtx) && this.fallDots.splice(i,1);
 			}
 						
 			//渲染烟花
 			this.createFireworks();
-			this.skyLight = 0;
-			for(j = this.fireworks.length - 1;j >= 0;--j){
-				this.skyLight = Math.max(this.skyLight,this.fireworks[j].getOpacity());
-				!this.fireworks[j].render(this.fireworkCtx) && this.fireworks.splice(j,1);
+			// this.skyLight = 0;
+			for(i = this.fireworks.length - 1; i >= 0; --i){
+				// this.skyLight = Math.max(this.skyLight,this.fireworks[j].getOpacity());
+				!this.fireworks[i].render(this.fireworkCtx) && this.fireworks.splice(i,1);
 			}
-			this.skyRender();
+			// this.skyRender();
 
 			// tree.render(this.titleCtx);
 
@@ -133,6 +158,8 @@ import Firework from './fireworks'
 			// 	this.dots[j].render(this.dropCtx);
 			// }	
 			// console.timeEnd('label');
+
+			this.testLoop(this.fallCtx);
 		}
 		skyRender(){
 			this.mbCtx.clearRect(0,0,this.width,this.height);
@@ -159,12 +186,14 @@ import Firework from './fireworks'
 		createFireworks(){
 			if(--this.fireworkTime <= 0){
 				this.fireworks.push(new Firework({ctx:this.fireworkCtx}));
-				this.fireworkTime = config.random({min:30,max:120});
+				this.fireworkTime = util.random(...config.fireworkInterval);
 			}
 		}
 
+
+
 		//画背景
-		drawBg({ctx,img}){
+		drawBg(ctx,img){
 			ctx.drawImage(img,0,0,this.width,this.height);
 		}
 		//处理图片为需要的对象类型[] => {};
