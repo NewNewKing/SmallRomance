@@ -1,9 +1,14 @@
+import resize from './resize'
+
+const width = 375;
+const height = 667;
+
 const config = (function(){
 
 	return {
 		// 整体宽高
-		width: 375,
-		height: 667,
+		width: width,
+		height: height,
 		//canvas
 		canvases:['fall', 'bg', 'firework'],
 		// 飘落微粒产生间隔
@@ -31,13 +36,26 @@ const config = (function(){
 		fallType: 'mix',
 		// 烟花间隔
 		fireworkInterval:[30, 120],
+		//烟花的属性
+		fireworks:{
+			x: undefined,
+			y: height,
+			xEnd: undefined,
+			yEnd: undefined,
+			size: 2,
+			radius: 1.7,  //烟花半径
+			velocity: 3,  //速率
+			opacity: 0.8,
+			count: 300,   //炸裂后粒子数
+			wait: undefined,  //消失后 => 炸裂  等待时间
+			color: undefined,  //烟花颜色
+		},
 
 
-		skyColor:'hsla(210, 60%, {skyColor}, 0.2)',
-
-
-		
+		skyColor:'hsla(210, 60%, {skyColor}, 0.2)',	
 	}
 })();
+
+resize(config.width, config.height, config.canvases);
 
 export default config

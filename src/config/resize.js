@@ -1,10 +1,4 @@
-import config from '../config/global.js'
-
-function resize(){
-	const width = config.width 
-		, height = config.height
-		, canvases = config.canvases;
-
+function resize(width, height , canvases){
 	if(!/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
 		const body = document.querySelectorAll('body')[0];
 		body.style.width = width + 'px';
@@ -18,4 +12,4 @@ function resize(){
 	});
 }
 
-resize();
+export default resize

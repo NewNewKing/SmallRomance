@@ -1,12 +1,12 @@
 import Particle from '../fall/particle'
 
 class FireworkParticle extends Particle{
-	constructor({x,y,size = 1,circle}){
+	constructor({x,y,size = 1,radius}){
 		super({x,y,size});
 		this.rate = Math.random();
 		this.angle = Math.PI * 2 * Math.random();
-		this.vx = circle * Math.cos(this.angle) * this.rate;
-		this.vy = circle * Math.sin(this.angle) * this.rate;
+		this.vx = radius * Math.cos(this.angle) * this.rate;
+		this.vy = radius * Math.sin(this.angle) * this.rate;
 	}
 
 	go(){

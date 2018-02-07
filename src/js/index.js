@@ -5,7 +5,6 @@
 // 基础配置
 import config from '../config/global'
 import util from '../config/util'
-import '../js/resize'
 
 // 读取图片
 import imgList from '../config/imgList'
@@ -15,8 +14,6 @@ import ImgLoader from './imgLoader'
 import Snowflake from './fall/snowflake'
 import Heart from './fall/heart'
 
-
-// import tree from './tree'
 // import Shape from './shape'
 import Firework from './fireworks/fireworks'
 
@@ -102,6 +99,7 @@ import Firework from './fireworks/fireworks'
 			this.loop();
 
 		}
+
 		test(){
 
 		}		
@@ -183,14 +181,14 @@ import Firework from './fireworks/fireworks'
 				this.showFireworkWords(wordsArr);
 			}.bind(this),2000);		
 		}
+
+		// 创建随机烟花
 		createFireworks(){
 			if(--this.fireworkTime <= 0){
-				this.fireworks.push(new Firework({ctx:this.fireworkCtx}));
+				this.fireworks.push(new Firework(config.fireworks));
 				this.fireworkTime = util.random(...config.fireworkInterval);
 			}
 		}
-
-
 
 		//画背景
 		drawBg(ctx,img){
