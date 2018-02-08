@@ -43,7 +43,7 @@ const config = (function(){
 			xEnd: undefined,
 			yEnd: undefined,
 			size: 2,
-			radius: 1.7,  //烟花半径
+			radius: 1.5,  //烟花半径
 			velocity: 3,  //速率
 			opacity: 0.8,
 			count: 300,   //炸裂后粒子数

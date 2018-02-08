@@ -58,7 +58,7 @@ import Firework from './fireworks/fireworks'
 			this.fallType = config.fallType,
 
 			//烟花的数组
-			this.fireworkTime = util.random(...config.fireworkInterval);
+			this.fireworkTime = util.random(...config.fireworkInterval) | 0;
 			this.fireworks = [];
 
 			//字的数组
