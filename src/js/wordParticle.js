@@ -1,8 +1,8 @@
 import Heart from './heart'
 
 class WordParticle extends Heart{
-	constructor({x,y,minSize,maxSize,size}){
-		super({x,y,minSize,maxSize,size});
+	constructor({x, y, minSize, maxSize, size }){
+		super({x, y, minSize, maxSize, size});
 		this.y0 = y;
 		this.x0 = x;
 	}
