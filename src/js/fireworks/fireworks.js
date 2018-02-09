@@ -2,9 +2,12 @@ import config from '../../config/global'
 import util from '../../config/util.js'
 
 import FireworkParticle from './fireworkParticle'
+import FireworkWords from './fireworkWords'
+
+const GRAVITY = 0.002;
 
 class Firework {
-	constructor({x, y = config.height, xEnd, yEnd, size = 2, radius = 1.2, velocity = 3, opacity = 0.8, count=200, wait, color, particles} = {}){
+	constructor({x, y = config.height, xEnd, yEnd, size = 2, radius = 1.2, velocity = 3, opacity = 0.8, count=200, wait, color, dots, prtOption = {}} = {}){
 		//自身属性
 		this.x = x ? x : util.random(config.width / 8, config.width * 7 / 8);
 		this.y = y;
@@ -16,20 +19,22 @@ class Firework {
 		this.velocity = -Math.abs(velocity);		
 		this.wait = wait ? wait : util.random(30, 60);
 
-		this.radius = radius;		
-		this.color = color ? color : `hsla(${360 * Math.random()},80%,60%,1)`;
+		this.radius = radius;	
+		this.GRAVITY = GRAVITY;	
+
+		this.hue = 360 * Math.random() | 0;
+		this.color = color ? color : `hsla(${this.hue},80%,60%,1)`;
 		this.status = 1;
-		
-		if(!particles){
+		if(!dots){
 			this.count = count;
 			this.particles = [];
 			this.createParticles();
 			this.type = 'normal';
 		}else{
 			this.type = 'words';
-			this.particles = particles;
+			const option = {xStart: this.xEnd, yStart: this.yEnd};
+			this.particles = dots.map(dot => new FireworkWords(util.extend({}, dot, option, prtOption)));
 		}
-		// this.ctx = ctx;
 		
 	}
 	createParticles(){
@@ -37,8 +42,12 @@ class Firework {
 			this.particles.push(new FireworkParticle({x:this.xEnd, y:this.yEnd, radius:this.radius}));
 		}
 	}
-	getOpacity(){
-		return this.status == 3 ? this.opacity : 0;
+	getSkyColor(){
+		const skyColor = {
+			lightness: this.status == 3 ? this.opacity : 0 ,
+			hue: this.hue
+		};
+		return skyColor;
 	}
 	render(ctx){
 		switch (this.status){
@@ -54,6 +63,7 @@ class Firework {
 				ctx.arc(this.x + Math.sin(Math.PI * 2 * Math.random()) / 1.2, this.y, this.size, 0, Math.PI * 2, false);
 				ctx.fill();
 				ctx.restore();
+
 				this.rise();
 				return true;
 			break;
@@ -85,6 +95,7 @@ class Firework {
 	}
 	rise(){
 		this.y += this.velocity * 1;
+		this.velocity += this.GRAVITY;
 		if(this.y - this.yEnd <= 50){
 			this.opacity = (this.y - this.yEnd) / 50;
 		}

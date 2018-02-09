@@ -1,6 +1,6 @@
 import resize from './resize'
 
-const width = 375;
+const width = 360;
 const height = 667;
 
 const config = (function(){
@@ -10,7 +10,7 @@ const config = (function(){
 		width: width,
 		height: height,
 		//canvas
-		canvases:['fall', 'bg', 'firework'],
+		canvases:['fall', 'bg', 'firework', 'title'],
 		// 飘落微粒产生间隔
 		snowInterval: 60,
 		heartInterval: 15,
@@ -33,9 +33,9 @@ const config = (function(){
 			speed: 1,
 		},
 		// 飘落的类型('snow', 'heart', 'mix')
-		fallType: 'mix',
+		fallType: 'snow',
 		// 烟花间隔
-		fireworkInterval:[30, 120],
+		fireworkInterval:[60, 240],
 		//烟花的属性
 		fireworks:{
 			x: undefined,
@@ -43,7 +43,7 @@ const config = (function(){
 			xEnd: undefined,
 			yEnd: undefined,
 			size: 2,
-			radius: 1.5,  //烟花半径
+			radius: 2,  //烟花半径
 			velocity: 3,  //速率
 			opacity: 0.8,
 			count: 300,   //炸裂后粒子数
@@ -51,8 +51,19 @@ const config = (function(){
 			color: undefined,  //烟花颜色
 		},
 
+		//字的参数
+		shape:{
+			mini: 1,   //组成字的粒子数  mini越大 粒子数越少
+			gap: 4,   //粒子的间隔数 必须能被width整除
+		},
+		word:{
+			size: 70,
+			y: 120
+		},
+		wordDelay: 3000,  //字出现的延迟时间
 
-		skyColor:'hsla(210, 60%, {skyColor}, 0.2)',	
+
+		skyColor:'hsla({hue}, 60%, {lightness}%, 0.2)',	
 	}
 })();
 
