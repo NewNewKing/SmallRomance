@@ -348,6 +348,8 @@ import TitleParticle from './TitleParticle'
 			this.titleOpt.start = true;
 			this.titleOpt.time = config.titleOpt.e + config.titleOpt.delay;
 
+			config.shape.gap = config.titleOpt.gap;
+			config.word.size = config.titleOpt.size;
 			config.word.y += config.titleOpt.distance;
 
 			const dots = this.getDotsPostion(this.titleWords.shift());
@@ -357,7 +359,7 @@ import TitleParticle from './TitleParticle'
 					y: dot.y,
 					xStart: util.random(0, config.width),
 					yStart: util.random(-100, 0),
-					size: 6,
+					size: 5,
 					e: config.titleOpt.e
 				}
 				this.titleDots.push(new TitleParticle(option));

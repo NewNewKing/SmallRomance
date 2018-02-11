@@ -4,6 +4,8 @@ import util from './util'
 const width = 360;
 const height = 600;
 
+//与时间有关的设置均为毫秒数，本文件底部会自动转化为帧数。
+
 const config = (function(){
 
 	return {
@@ -11,7 +13,7 @@ const config = (function(){
 		width: width,  //---不建议改动
 		height: height, //---不建议改动
 		//canvas
-		canvases:['fall', 'bg', 'firework', 'dialogue'],
+		canvases:['fall', 'bg', 'firework', 'dialogue'],//---不建议改动
 		// 飘落微粒产生间隔
 		snowInterval: 60,
 		heartInterval: 15,
@@ -46,7 +48,7 @@ const config = (function(){
 			color3: 'red',
 			color4: '#ffff00',
 			color5: '#00ff00',
-			color6: '#0000ff',
+			color6: '#00ffff',
 			color7: '#fff',
 		},
 		dialogue:[
@@ -88,6 +90,8 @@ const config = (function(){
 		//阶段四
 		titleWords:'新年快乐|万事如意|心想事成',
 		titleOpt:{
+			gap: 3,
+			size: 70,  //最后字的大小
 			delay: 4000, //
 			distance: 120, //行间距
 			e: 5000 //速率
@@ -95,15 +99,16 @@ const config = (function(){
 		
 
 
+		/*******均不建议改动********/
 		//字的参数
-		shape:{ //---不建议改动
+		shape:{
 			mini: 1,   //组成字的粒子数  mini越大 粒子数越少
 			gap: 4,   //粒子的间隔数 必须能被width整除
 		},
-		word:{  //---不建议改动
+		word:{  
 			size: 70,
 			y: 120
-		}, //---不建议改动
+		}, 
 
 		
 	}
