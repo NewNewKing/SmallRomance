@@ -8,7 +8,7 @@ import util from '../config/util'
 
 // 读取图片
 import imgList from '../config/imgList'
-import ImgLoader from './imgLoader'
+import ImgLoader from './other/imgLoader'
 
 // 飘落装饰
 import Snowflake from './fall/snowflake'
@@ -16,7 +16,7 @@ import Heart from './fall/heart'
 
 //烟花
 import Firework from './fireworks/fireworks'
-import ShapeMaker from './shape'
+import ShapeMaker from './other/shape'
 
 //最后
 import TitleParticle from './TitleParticle'
@@ -29,6 +29,8 @@ import TitleParticle from './TitleParticle'
 			//初始化属性
 			this.initProperty();
 
+			this.initAudio();
+
 			//加载图片
 			ImgLoader.load(imgList).then(imgs => {
 				document.querySelector('#loading').style.display = 'none';
@@ -38,6 +40,12 @@ import TitleParticle from './TitleParticle'
 			}).catch(err => {
 				console.log(err);
 			});		
+		}
+		initAudio(){
+			const audio = new Audio();
+			audio.src = require('../audio/1.mp3');
+			audio.loop = true;
+			audio.play();
 		}
 		//创建本例属性
 		initProperty(){
@@ -211,8 +219,8 @@ import TitleParticle from './TitleParticle'
 			const ctx = this.dialogueCtx;
 			ctx.clearRect(0, 0, config.width, config.height);
 
-			ctx.fillStyle = this.dialogueOpt['color' + this.dialogue.type || 1];
-			ctx.font = this.dialogueOpt['font' + this.dialogue.type || 1];
+			ctx.fillStyle = this.dialogueOpt['color' + this.dialogue.type] || this.dialogueOpt.color1;
+			ctx.font = this.dialogueOpt['font' + this.dialogue.type] || this.dialogueOpt.font1;
 
 			//说话
 			this.dialogue.current = this.dialogue.current || 0;
@@ -277,9 +285,6 @@ import TitleParticle from './TitleParticle'
 				this.getDotsPostion(this.fireWords.shift(), true);
 				this.fireOpt.wordInterval = config.fireOpt.wordInterval;
 			}
-
-			// 第二个参数控制是否产生烟花
-			// this.getDotsPostion(wordsArr, true);
 		}
 		//创建密集的烟花
 		createDenseFire(){
@@ -359,7 +364,7 @@ import TitleParticle from './TitleParticle'
 					y: dot.y,
 					xStart: util.random(0, config.width),
 					yStart: util.random(-100, 0),
-					size: 5,
+					size: config.titleOpt.pSize,
 					e: config.titleOpt.e
 				}
 				this.titleDots.push(new TitleParticle(option));

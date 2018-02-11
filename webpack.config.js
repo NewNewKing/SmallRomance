@@ -28,6 +28,13 @@ module.exports = {
 				options:{
 					name:'img/[name].[ext]'
 				}
+			},
+			{
+				test:/\.mp3(\?.*)?$/,
+				loader:'file-loader',
+				options:{
+					namel:'audio/[name].[ext]'
+				}
 			}
 		]
 	},

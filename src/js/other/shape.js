@@ -12,7 +12,7 @@ class Shape{
 	}
 
 	//写入想要渲染的字
-	write({txt, size=50, fontFamily='sans-serif', x = this.canvas.width / 2, y = 100} = {}){
+	write({txt, size=50, fontFamily='Arial', x = this.canvas.width / 2, y = 100} = {}){
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.font = `bold ${size}px ${fontFamily}`;
 		this.ctx.fillText(txt,x,y);

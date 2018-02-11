@@ -52,16 +52,22 @@ const config = (function(){
 			color7: '#fff',
 		},
 		dialogue:[
-			{type:1, name:'马飞飞', txt:'同志们，正月十五晚上，我们怎么玩？'},
-			{type:2, name:'软软', txt:'想怎么玩！就怎么玩！安排巴适！'},
-			{type:3, name:'安安', txt:'真的？带我去喝茶！我要喝10个！'},
-			{type:4, name:'轩轩', txt:'喝啥子茶哦，大家都拖家带口的。'},
-			{type:5, name:'小勇、灿灿', txt:'就是，都带了家属的，还是炸金花算了。'},
-			{type:6, name:'李湘江', txt:'还是放火炮嘛，好耍！'},
-			{type:7, name:'王兴欣', txt:'就是，放火炮！走起！'},
+			{type:6, name:'男子', txt:'快过年了，我们去放烟花吧！'},
+			{type:2, name:'女子', txt:'天还这么亮，现在放烟花也不好看。'},
+			{type:2, name:'女子', txt:'再说你那有烟花吗？'},
+			{type:6, name:'男子', txt:'我当然有烟花啦。'},
+			{type:6, name:'男子', txt:'你那有打火机吗？'},
+			{type:2, name:'女子', txt:'没有呀～'},
+			{type:6, name:'男子', txt:'那你是怎么点燃我的心的？'},
+			{type:2, name:'女子', txt:'。。。'},
+			{type:2, name:'女子', txt:'可是我的心还没有被你点燃呀。'},
+			{type:6, name:'男子', txt:'别慌，我去买个打火机先。'},
+			{type:2, name:'女子', txt:'打火机可点不燃我的心。'},
+			{type:6, name:'男子', txt:'我要为你点燃整个天空。'},
+
 		],
 		// 阶段二
-		sunset: 10000, 
+		sunset: 8000, 
 
 	    // 阶段三
 		fireworkInterval:[60, 240],// 烟花产生间隔 //---不建议改动
@@ -79,7 +85,7 @@ const config = (function(){
 			wait: undefined,  //消失后 => 炸裂  等待时间
 			color: undefined,  //烟花颜色
 		},
-		fireWords:'正月里来|是新年呐啊|恭喜发财|红包拿来',
+		fireWords:'你的眼睛|真好看|里面有|日月冬夏|晴雨山川|但是|我的眼睛|更好看|因为|里面有你',
 		// hue:210 lightness 0
 		skyColor:'hsla({hue}, 60%, {lightness}%, 0.2)',	
 		fireOpt: {
@@ -88,10 +94,11 @@ const config = (function(){
 		},
 	
 		//阶段四
-		titleWords:'新年快乐|万事如意|心想事成',
+		titleWords:'我爱你|比你想的|还要爱你',
 		titleOpt:{
-			gap: 3,
+			gap: 4,
 			size: 70,  //最后字的大小
+			pSize: 8,
 			delay: 4000, //
 			distance: 120, //行间距
 			e: 5000 //速率
@@ -103,7 +110,7 @@ const config = (function(){
 		//字的参数
 		shape:{
 			mini: 1,   //组成字的粒子数  mini越大 粒子数越少
-			gap: 4,   //粒子的间隔数 必须能被width整除
+			gap: 2,   //粒子的间隔数 必须能被width整除
 		},
 		word:{  
 			size: 70,
