@@ -8,8 +8,12 @@ const util = {
 				origin[key] = item[key];
 			}
 		});
-
 		return origin;
+	},
+
+	//ms => 帧
+	transTime(time, defult){
+		return +time / 1000 * 60 | 0 || defult;
 	}
 }
 

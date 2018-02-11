@@ -13,7 +13,6 @@ class Shape{
 
 	//写入想要渲染的字
 	write({txt, size=50, fontFamily='sans-serif', x = this.canvas.width / 2, y = 100} = {}){
-		// console.log(y);
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.font = `bold ${size}px ${fontFamily}`;
 		this.ctx.fillText(txt,x,y);
@@ -33,7 +32,6 @@ class Shape{
 
 	//获取字的坐标点集合。
 	getDots({mini=1,gap = 5} = {}){
-		console.log(this.y);
 		const data = this.ctx.getImageData(0,this.y - this.size / 2,this.canvas.width,this.y + this.size / 2).data;
 		let dots = [],x = 0, y = this.y - this.size / 2 ,count = 0;
 		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
