@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1.0, user-scalable=no"/>
-	<title>Merry Christmas</title>
+	<title>新年快乐</title>
 	<style>
 		*{
 			margin: 0;
@@ -51,10 +51,32 @@
 		.title{
 			z-index:9;
 		}
+		#music{
+			width: 36px;
+			height: 36px;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			position: absolute;
+			z-index: 999;
+			right: 10px;
+			top: 14px;
 
+		}
+		@-webkit-keyframes play{
+		    0%{transform: rotate(0deg);-webkit-transform: rotate(0deg);}
+		    100%{transform: rotate(360deg);-webkit-transform: rotate(360deg);}
+		}
+		.on{
+			background-image: url('./img/musicon.png');
+			-webkit-animation:play 1.5s linear both infinite;
+		}
+		.off{
+			background-image: url('./img/musicoff.png');
+		}
 	</style>
 </head>
 <body>
+	<span class='on' id='music'></span>
 	<canvas id='bg'>您的浏览器不支持Canvas元素</canvas>
 	<canvas id='firework'>您的浏览器不支持Canvas元素</canvas>
 	<canvas id='fall'>您的浏览器不支持Canvas元素</canvas>

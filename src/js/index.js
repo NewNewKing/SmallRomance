@@ -46,6 +46,24 @@ import TitleParticle from './TitleParticle'
 			audio.src = require('../audio/1.mp3');
 			audio.loop = true;
 			audio.play();
+			audio.volume = 0.5;
+			const music = document.querySelector('#music');
+
+			document.addEventListener("WeixinJSBridgeReady", function () { 
+		        audio.play(); 
+		    }, false);
+
+
+			music.onclick = function(){
+				const cla =  this.getAttribute('class');
+				if(cla == 'on'){
+					this.setAttribute('class', 'off');
+					audio.pause();
+				}else{
+					this.setAttribute('class', 'on');
+					audio.play();
+				}
+			}
 		}
 		//创建本例属性
 		initProperty(){
@@ -260,10 +278,10 @@ import TitleParticle from './TitleParticle'
 				!this.fireOpt.end && this.showFireworkWords();
 				
 			}
-			if(this.fireOpt.time == -240){
+			if(this.fireOpt.time == -60){
 				this.fireOpt.end && this.fireworks.push(new Firework({
 					x: config.width / 2,
-					y: config.height / 8,
+					yEnd: config.height / 8,
 					count: 600,
 					radius: 5
 				}));

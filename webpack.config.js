@@ -30,10 +30,10 @@ module.exports = {
 				}
 			},
 			{
-				test:/\.mp3(\?.*)?$/,
+				test:/\.mp3$/,
 				loader:'file-loader',
 				options:{
-					namel:'audio/[name].[ext]'
+					namel:'[name].[ext]'
 				}
 			}
 		]
