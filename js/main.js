@@ -173,9 +173,9 @@ var config = function () {
 			color6: '#00ffff',
 			color7: '#fff'
 		},
-		dialogue: [{ type: 1, name: '马飞飞', txt: '同志们，正月十五晚上，我们怎么玩？' }, { type: 2, name: '软软', txt: '想怎么玩！就怎么玩！安排巴适！' }, { type: 3, name: '安安', txt: '真的？带我去喝茶！我要喝10个！' }, { type: 4, name: '轩轩', txt: '喝啥子茶哦，大家都拖家带口的。' }, { type: 5, name: '小勇、灿灿', txt: '就是，都带了家属的，还是炸金花算了。' }, { type: 6, name: '李湘江', txt: '还是放火炮嘛，好耍！' }, { type: 7, name: '王兴欣', txt: '就是，放火炮！走起！' }],
+		dialogue: [{ type: 6, name: '男子', txt: '快过年了，我们去放烟花吧！' }, { type: 2, name: '女子', txt: '天还这么亮，现在放烟花也不好看。' }, { type: 2, name: '女子', txt: '再说你那有烟花吗？' }, { type: 6, name: '男子', txt: '我当然有烟花啦。' }, { type: 6, name: '男子', txt: '你那有打火机吗？' }, { type: 2, name: '女子', txt: '没有呀～' }, { type: 6, name: '男子', txt: '那你是怎么点燃我的心的？' }, { type: 2, name: '女子', txt: '。。。' }, { type: 2, name: '女子', txt: '可是我的心还没有被你点燃呀。' }, { type: 6, name: '男子', txt: '别慌，我去买个打火机先。' }, { type: 2, name: '女子', txt: '打火机可点不燃我的心。' }, { type: 6, name: '男子', txt: '天快黑了，我要为你点燃整片天空。' }],
 		// 阶段二
-		sunset: 10000,
+		sunset: 8000,
 
 		// 阶段三
 		fireworkInterval: [60, 240], // 烟花产生间隔 //---不建议改动
@@ -193,19 +193,19 @@ var config = function () {
 			wait: undefined, //消失后 => 炸裂  等待时间
 			color: undefined //烟花颜色
 		},
-		fireWords: '正月里来|是新年呐啊|恭喜发财|红包拿来',
+		fireWords: '你的眼睛|真好看|里面有|日月冬夏|晴雨山川|但是|我的眼睛|更好看|因为|里面有你',
 		// hue:210 lightness 0
 		skyColor: 'hsla({hue}, 60%, {lightness}%, 0.2)',
 		fireOpt: {
-			wordInterval: 3000, //每段话出现的间隔时间
-			denseTime: 10000
+			wordInterval: 3000 //每段话出现的间隔时间
 		},
 
 		//阶段四
-		titleWords: '新年快乐|万事如意|心想事成',
+		titleWords: '一不小心|就和你|到了白头',
 		titleOpt: {
-			gap: 3,
+			gap: 4,
 			size: 70, //最后字的大小
+			pSize: 8,
 			delay: 4000, //
 			distance: 120, //行间距
 			e: 5000 //速率
@@ -215,7 +215,7 @@ var config = function () {
 		//字的参数
 		shape: {
 			mini: 1, //组成字的粒子数  mini越大 粒子数越少
-			gap: 4 //粒子的间隔数 必须能被width整除
+			gap: 2 //粒子的间隔数 必须能被width整除
 		},
 		word: {
 			size: 70,
@@ -585,7 +585,7 @@ var _imgList = __webpack_require__(8);
 
 var _imgList2 = _interopRequireDefault(_imgList);
 
-var _imgLoader = __webpack_require__(10);
+var _imgLoader = __webpack_require__(12);
 
 var _imgLoader2 = _interopRequireDefault(_imgLoader);
 
@@ -597,15 +597,15 @@ var _heart = __webpack_require__(4);
 
 var _heart2 = _interopRequireDefault(_heart);
 
-var _fireworks = __webpack_require__(11);
+var _fireworks = __webpack_require__(13);
 
 var _fireworks2 = _interopRequireDefault(_fireworks);
 
-var _shape = __webpack_require__(13);
+var _shape = __webpack_require__(15);
 
 var _shape2 = _interopRequireDefault(_shape);
 
-var _TitleParticle = __webpack_require__(14);
+var _TitleParticle = __webpack_require__(16);
 
 var _TitleParticle2 = _interopRequireDefault(_TitleParticle);
 
@@ -625,6 +625,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			//初始化属性
 			this.initProperty();
 
+			this.initAudio();
+
 			//加载图片
 			_imgLoader2.default.load(_imgList2.default).then(function (imgs) {
 				document.querySelector('#loading').style.display = 'none';
@@ -635,10 +637,35 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				console.log(err);
 			});
 		}
-		//创建本例属性
-
 
 		_createClass(Canvas, [{
+			key: 'initAudio',
+			value: function initAudio() {
+				var audio = new Audio();
+				audio.src = __webpack_require__(17);
+				audio.loop = true;
+				audio.play();
+				audio.volume = 0.5;
+				var music = document.querySelector('#music');
+
+				document.addEventListener("WeixinJSBridgeReady", function () {
+					audio.play();
+				}, false);
+
+				music.onclick = function () {
+					var cla = this.getAttribute('class');
+					if (cla == 'on') {
+						this.setAttribute('class', 'off');
+						audio.pause();
+					} else {
+						this.setAttribute('class', 'on');
+						audio.play();
+					}
+				};
+			}
+			//创建本例属性
+
+		}, {
 			key: 'initProperty',
 			value: function initProperty() {
 				var _this2 = this;
@@ -827,8 +854,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				var ctx = this.dialogueCtx;
 				ctx.clearRect(0, 0, _global2.default.width, _global2.default.height);
 
-				ctx.fillStyle = this.dialogueOpt['color' + this.dialogue.type || 1];
-				ctx.font = this.dialogueOpt['font' + this.dialogue.type || 1];
+				ctx.fillStyle = this.dialogueOpt['color' + this.dialogue.type] || this.dialogueOpt.color1;
+				ctx.font = this.dialogueOpt['font' + this.dialogue.type] || this.dialogueOpt.font1;
 
 				//说话
 				this.dialogue.current = this.dialogue.current || 0;
@@ -872,10 +899,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				if (this.fireOpt.time <= -180) {
 					!this.fireOpt.end && this.showFireworkWords();
 				}
-				if (this.fireOpt.time == -240) {
+				if (this.fireOpt.time == -60) {
 					this.fireOpt.end && this.fireworks.push(new _fireworks2.default({
 						x: _global2.default.width / 2,
-						y: _global2.default.height / 8,
+						yEnd: _global2.default.height / 8,
 						count: 600,
 						radius: 5
 					}));
@@ -899,9 +926,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					this.getDotsPostion(this.fireWords.shift(), true);
 					this.fireOpt.wordInterval = _global2.default.fireOpt.wordInterval;
 				}
-
-				// 第二个参数控制是否产生烟花
-				// this.getDotsPostion(wordsArr, true);
 			}
 			//创建密集的烟花
 
@@ -1001,7 +1025,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 						y: dot.y,
 						xStart: _util2.default.random(0, _global2.default.width),
 						yStart: _util2.default.random(-100, 0),
-						size: 5,
+						size: _global2.default.titleOpt.pSize,
 						e: _global2.default.titleOpt.e
 					};
 					_this4.titleDots.push(new _TitleParticle2.default(option));
@@ -1107,8 +1131,9 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 var imgList = {
-	bg: __webpack_require__(9)
-	// snowflake:'./img/snowflake.png'
+	bg: __webpack_require__(9),
+	musicon: __webpack_require__(10),
+	musicoff: __webpack_require__(11)
 };
 exports.default = imgList;
 
@@ -1120,6 +1145,18 @@ module.exports = __webpack_require__.p + "img/bg2.jpg";
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "img/musicon.png";
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "img/musicoff.png";
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1175,7 +1212,7 @@ var ImgLoader = function () {
 exports.default = ImgLoader;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1199,7 +1236,7 @@ var _fireworkParticle = __webpack_require__(5);
 
 var _fireworkParticle2 = _interopRequireDefault(_fireworkParticle);
 
-var _fireworkWords = __webpack_require__(12);
+var _fireworkWords = __webpack_require__(14);
 
 var _fireworkWords2 = _interopRequireDefault(_fireworkWords);
 
@@ -1348,7 +1385,7 @@ var Firework = function () {
 exports.default = Firework;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1419,7 +1456,7 @@ var FireworkWords = function (_FireworkParticle) {
 exports.default = FireworkWords;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1462,7 +1499,7 @@ var Shape = function () {
 			    _ref$size = _ref.size,
 			    size = _ref$size === undefined ? 50 : _ref$size,
 			    _ref$fontFamily = _ref.fontFamily,
-			    fontFamily = _ref$fontFamily === undefined ? 'sans-serif' : _ref$fontFamily,
+			    fontFamily = _ref$fontFamily === undefined ? 'Arial' : _ref$fontFamily,
 			    _ref$x = _ref.x,
 			    x = _ref$x === undefined ? this.canvas.width / 2 : _ref$x,
 			    _ref$y = _ref.y,
@@ -1523,7 +1560,7 @@ var Shape = function () {
 exports.default = Shape;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1610,6 +1647,12 @@ var TitleParticle = function (_Heart) {
 }(_heart2.default);
 
 exports.default = TitleParticle;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "372d8f12b7996ebad19c7aec8c894181.mp3";
 
 /***/ })
 /******/ ]);
