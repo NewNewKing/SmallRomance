@@ -33,7 +33,7 @@ module.exports = {
 				test:/\.mp3$/,
 				loader:'file-loader',
 				options:{
-					namel:'[name].[ext]'
+					name:'[name].[ext]'
 				}
 			}
 		]
@@ -46,6 +46,7 @@ module.exports = {
 			template:'index.html',
 			inject:true,
 		}),
-		new CleanWebpackPlugin(['dist'])
+		new CleanWebpackPlugin(['dist']),
+		new webpack.optimize.UglifyJsPlugin()
 	]
 }
