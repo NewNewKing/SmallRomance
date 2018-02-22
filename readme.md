@@ -1,7 +1,13 @@
 # Merry Christmas
 
+
+**要是觉得这个项目还不错，别忘记star哦**
+
+
 ### 快速预览
-访问[这个网站](https://newnewking.github.io/MerryChristmas/)
+访问[这个网站](http://lingyouhuiquanla.com/lover/)  国内网站
+
+或者访问[github.io网站](https://newnewking.github.io/MerryChristmas/)
 
 ### 名不副实
 这个项目和圣诞节的关联不大，是作者本来想在圣诞节之前完成
