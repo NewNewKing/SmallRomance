@@ -1,4 +1,4 @@
-# Merry Christmas
+# SmallRamance
 
 
 **要是觉得这个项目还不错，别忘记star哦**
@@ -9,10 +9,6 @@
 
 或者访问[github.io网站](https://newnewking.github.io/MerryChristmas/)
 
-### 名不副实
-这个项目和圣诞节的关联不大，是作者本来想在圣诞节之前完成
-
-结果太监了。
 
 ### 开发者调试
 
