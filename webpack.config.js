@@ -14,7 +14,7 @@ module.exports = {
 		contentBase:'./dist',
 		port:8888,
 		open:true,
-		host:'0.0.0.0'
+		// host:'0.0.0.0'
 	},
 	module:{
 		rules:[
