@@ -32,7 +32,7 @@ class Shape{
 
 	//获取字的坐标点集合。
 	getDots({mini=1,gap = 5} = {}){
-		const data = this.ctx.getImageData(0,this.y - this.size / 2,this.canvas.width,this.y + this.size / 2).data;
+		const data = this.ctx.getImageData(0,this.y - this.size / 2,this.canvas.width, this.size).data;
 		let dots = [],x = 0, y = this.y - this.size / 2 ,count = 0;
 		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
 			if(data[i+3] > 0){
@@ -42,7 +42,7 @@ class Shape{
 			if(x >= this.canvas.width){
 				x = 0;
 				y += gap;
-				i += gap * 4 * this.canvas.width;
+				i += (gap - 1) * 4 * this.canvas.width;
 			}
 		}
 		return dots;
