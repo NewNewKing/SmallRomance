@@ -46,6 +46,13 @@ npm run build
 
 参数说明相见global.js注释
 
+### 效果初级教程
+
+[烟花效果](https://github.com/NewNewKing/SmallRomance/issues/2);
+
+[文字粒子效果](https://github.com/NewNewKing/SmallRomance/issues/3);
+
+
 ### 参考项目
 
 **在canvas中使用粒子组成文字**
