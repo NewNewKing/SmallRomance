@@ -50,8 +50,8 @@ import TitleParticle from './TitleParticle'
 			const music = document.querySelector('#music');
 
 			document.addEventListener("WeixinJSBridgeReady", function () { 
-		        audio.play(); 
-		    }, false);
+				audio.play(); 
+			}, false);
 
 
 			music.onclick = function(){
@@ -138,10 +138,12 @@ import TitleParticle from './TitleParticle'
 					++this.status;
 				break;
 				case 3: 
-					config.word.y -= config.titleOpt.distance;
 					this.fireOpt = null;
 					this.fireWords = null;
-					++this.status;
+          config.word.y = 0;
+          config.shape.gap = config.titleOpt.gap;
+          config.word.size = config.titleOpt.size;
+					++this.status; 
 				break;
 				case 4: 
 					this.titleOpt = null;
@@ -218,13 +220,13 @@ import TitleParticle from './TitleParticle'
 			switch(this.fallType){
 				case 'snow': this.time % config.snowInterval == 0 && this.fallDots.push(new Snowflake(config.snow));
 				break;
- 				case 'heart': this.time % config.heartInterval == 0 && this.fallDots.push(new Heart(config.heart));
- 				break;
- 				case 'mix': 
+				case 'heart': this.time % config.heartInterval == 0 && this.fallDots.push(new Heart(config.heart));
+				break;
+				case 'mix': 
 
- 				this.time % config.snowInterval == 0 && this.fallDots.push(new Snowflake(config.snow));
- 				this.time % config.heartInterval == 0 && this.fallDots.push(new Heart(config.heart));
- 				break;
+				this.time % config.snowInterval == 0 && this.fallDots.push(new Snowflake(config.snow));
+				this.time % config.heartInterval == 0 && this.fallDots.push(new Heart(config.heart));
+				break;
 			}
 			// 雪花飘落
 			for(let i = this.fallDots.length - 1; i >= 0; --i){
@@ -370,9 +372,6 @@ import TitleParticle from './TitleParticle'
 			this.titleDots = [];
 			this.titleOpt.start = true;
 			this.titleOpt.time = config.titleOpt.e + config.titleOpt.delay;
-
-			config.shape.gap = config.titleOpt.gap;
-			config.word.size = config.titleOpt.size;
 			config.word.y += config.titleOpt.distance;
 
 			const dots = this.getDotsPostion(this.titleWords.shift());
@@ -420,7 +419,24 @@ import TitleParticle from './TitleParticle'
 		
 		//画背景
 		drawBg(ctx,img){
-			ctx.drawImage(img,0,0,this.width,this.height);
+			const { width, height } = img;
+			const ratio = width / height,
+				wRa = this.width / this.height;
+
+			let sx,sy,sw,sh;
+			if (ratio >= wRa) {
+				// 背景图宽了 裁剪宽度
+				sy = 0, sh = height;
+				sx = (ratio - wRa) * width / 2
+				sw = height * wRa
+			}else if (ratio < wRa) {
+				// 背景图窄了
+				sx = 0, sw = width;
+				sy = (height - width / wRa) / 2;
+				sh = width / wRa;
+			}
+
+			ctx.drawImage(img,sx, sy, sw, sh, 0,0,this.width,this.height);
 		}
 		//处理图片为需要的对象类型[] => {};
 		dealImgs(imgs){

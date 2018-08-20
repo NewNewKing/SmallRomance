@@ -7,8 +7,8 @@ class Shape{
 		this.ctx = this.canvas.getContext('2d');
 
 		this.ctx.fillStyle = 'red';
-    	this.ctx.textBaseline = 'middle';
-   	 	this.ctx.textAlign = 'center';
+  	this.ctx.textBaseline = 'middle';
+ 	 	this.ctx.textAlign = 'center';
 	}
 
 	//写入想要渲染的字
@@ -16,11 +16,12 @@ class Shape{
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.font = `bold ${size}px ${fontFamily}`;
 		this.ctx.fillText(txt,x,y);
-
 		//记录的当前字的坐标
 		this.x = x;
 		this.y = y;
 		this.size = size;
+		this.count = txt.length;
+
 	}
 
 	getPosition(){
@@ -32,17 +33,25 @@ class Shape{
 
 	//获取字的坐标点集合。
 	getDots({mini=1,gap = 5} = {}){
-		const data = this.ctx.getImageData(0,this.y - this.size / 2,this.canvas.width, this.size).data;
-		let dots = [],x = 0, y = this.y - this.size / 2 ,count = 0;
-		for(let i = 0,len = data.length;i <= len ;i+=(4*gap)){
+		// const xs = this.x - this.count * this.size / 2 - 20;
+		// const ys = this.y - this.size / 2;
+		// const width = this.count * this.size + 40;
+		// const height = this.size 
+    const xs = 0;
+    const ys = this.y - this.size / 2;
+    const width = this.canvas.width;
+    const height = this.size;
+		const data = this.ctx.getImageData(xs, ys, width, height).data;
+		let dots = [],x = xs, y = ys, count = 0;
+		for(let i = 0,len = data.length; i <= len; i += ( 4 * gap )){
 			if(data[i+3] > 0){
-				++count % mini == 0 && dots.push({x, y: y});	
+				++count % mini == 0 && dots.push({x, y});	
 			}
 			x += gap;
-			if(x >= this.canvas.width){
-				x = 0;
+			if(x >= xs + width){
 				y += gap;
-				i += (gap - 1) * 4 * this.canvas.width;
+				i += (gap - 1) * 4 * width - 4 * (x - xs - width) ;
+				x = xs;
 			}
 		}
 		return dots;

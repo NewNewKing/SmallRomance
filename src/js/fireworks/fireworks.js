@@ -7,7 +7,7 @@ import FireworkWords from './fireworkWords'
 const GRAVITY = 0.002;
 
 class Firework {
-	constructor({x, y = config.height, xEnd, yEnd, size = 2, radius = 1.2, velocity = 3, opacity = 0.8, count=200, wait, color, dots, prtOption = {}} = {}){
+	constructor({x, y = config.height, xEnd, yEnd,size = 2, radius = [1.2,1.2], velocity = 3, opacity = 0.8, count=[200,250], wait, color, dots, prtOption = {}} = {}){
 		//自身属性
 		this.x = x ? x : util.random(config.width / 8, config.width * 7 / 8);
 		this.y = y;
@@ -18,15 +18,14 @@ class Firework {
 		this.opacity = opacity;
 		this.velocity = -Math.abs(velocity);		
 		this.wait = wait ? wait : util.random(30, 60);
-
-		this.radius = radius;	
+		this.radius = util.random(...radius);	
 		this.GRAVITY = GRAVITY;	
 
 		this.hue = 360 * Math.random() | 0;
 		this.color = color ? color : `hsla(${this.hue},80%,60%,1)`;
 		this.status = 1;
 		if(!dots){
-			this.count = count;
+			this.count = util.random(...count) | 0;
 			this.particles = [];
 			this.createParticles();
 			this.type = 'normal';
@@ -34,8 +33,7 @@ class Firework {
 			this.type = 'words';
 			const option = {xStart: this.xEnd, yStart: this.yEnd};
 			this.particles = dots.map(dot => new FireworkWords(util.extend({}, dot, option, prtOption)));
-		}
-		
+		}	
 	}
 	createParticles(){
 		for(let i = 0;i < this.count;++i){

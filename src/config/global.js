@@ -1,8 +1,8 @@
 import resize from './resize'
 import util from './util'
 
-const width = 360;
-const height = 600;
+const width = util.isPhone() ? document.body.clientWidth : 360;
+const height = util.isPhone() ? document.body.clientHeight : 600;
 
 //与时间有关的设置均为毫秒数，本文件底部会自动转化为帧数。
 // 大多属性都设有默认值，都可以不用修改   一般只需要修改中文文字
@@ -81,10 +81,10 @@ const config = (function(){
 			xEnd: undefined,
 			yEnd: undefined,
 			size: 2,
-			radius: 2,  //烟花半径
+			radius: [1, 2],  //烟花半径
 			velocity: 3,  //速率
 			opacity: 0.8,
-			count: 300,   //炸裂后粒子数
+			count: [150,250],   //炸裂后粒子数
 			wait: undefined,  //消失后 => 炸裂  等待时间
 			color: undefined,  //烟花颜色
 		},
@@ -94,6 +94,15 @@ const config = (function(){
 		fireOpt: {
 			wordInterval: 3000, //每段话出现的间隔时间
 		},
+    //烟花字的参数
+    shape:{ 
+      gap: 3,   //粒子的间隔数 gap越大 粒子数越少
+    },
+    word:{  
+      size: 70,
+      y: height / 4
+    }, 
+
 	
 		//阶段四
 		titleWords:'一不小心|就和你|到了白头', // '|' 为分隔符
@@ -108,16 +117,7 @@ const config = (function(){
 		
 
 
-		/*******均不建议改动********/
-		//字的参数
-		shape:{
-			mini: 1,   //组成字的粒子数  mini越大 粒子数越少
-			gap: 2,   //粒子的间隔数 必须能被width整除
-		},
-		word:{  
-			size: 70,
-			y: 120
-		}, 
+		
 
 		
 	}

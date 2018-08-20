@@ -1,5 +1,7 @@
+import util from './util'
+
 function resize(width, height , canvases){
-	if(!/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+	if (util.isPhone) {
 		const body = document.querySelectorAll('body')[0];
 		body.style.width = width + 'px';
 		body.style.height = height + 'px';
