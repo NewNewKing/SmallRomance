@@ -377,7 +377,7 @@ class Canvas {
     words = words.filter(item => item !== '\b')
     const length = words.length;
     const size = config.word.size;
-    const y = config.titleOpt.y;
+    const y = this.status == 3 ? config.word.y : config.titleOpt.y;
     const dotsArr = [];
 
     words.forEach((item,index)=> {

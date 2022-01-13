@@ -1,8 +1,9 @@
 import resize from './resize'
 import util from './util'
 
-const width = util.isPhone() ? document.body.clientWidth : 360;
-const height = util.isPhone() ? document.body.clientHeight : 600;
+const width = util.isPhone() ? document.body.clientWidth : 375;
+const height = util.isPhone() ? document.body.clientHeight : 667;
+
 
 //与时间有关的设置均为毫秒数，本文件底部会自动转化为帧数。
 // 大多属性都设有默认值，都可以不用修改   一般只需要修改中文文字
