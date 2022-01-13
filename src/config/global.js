@@ -41,7 +41,7 @@ const config = (function(){
 		fallType: 'snow',
 
 		// 从阶段几开始 1、对话 2、天黑 3、烟花 4、展示文字
-		step: 4,
+		step: 1,
 		// 阶段一
 		dialogueOpt:{ 
 			interval: 1500,  //两句话的间隔时间
