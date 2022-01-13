@@ -40,40 +40,39 @@ const config = (function(){
 		// 飘落的类型('snow', 'heart', 'mix')
 		fallType: 'snow',
 
+		// 从阶段几开始 1、对话 2、天黑 3、烟花 4、展示文字
+		step: 4,
 		// 阶段一
 		dialogueOpt:{ 
-			interval: 2000,  //两句话的间隔时间
+			interval: 1500,  //两句话的间隔时间
 			speed: 100,   //语速
 			color1: '#ff00ff',
 			font1: '14px Arial',
 			color2: '#f97afb',
 			color3: 'red',
-			color4: '#ffff00',
+			color4: '#f8e71c',
 			color5: '#00ff00',
 			color6: '#00ffff',
 			color7: '#fff',
 		},
 		// type对应上面的color与font  若没有对应的 则默认为color1或font1
 		dialogue:[
-			{type:6, name:'男子', txt:'快过年了，我们去放烟花吧！'},
-			{type:2, name:'女子', txt:'天还这么亮，现在放烟花也不好看。'},
-			{type:2, name:'女子', txt:'再说你那有烟花吗？'},
-			{type:6, name:'男子', txt:'我当然有烟花啦。'},
-			{type:6, name:'男子', txt:'你那有打火机吗？'},
-			{type:2, name:'女子', txt:'没有呀～'},
-			{type:6, name:'男子', txt:'那你是怎么点燃我的心的？'},
-			{type:2, name:'女子', txt:'。。。'},
-			{type:2, name:'女子', txt:'可是我的心还没有被你点燃呀。'},
-			{type:6, name:'男子', txt:'别慌，我去买个打火机先。'},
-			{type:2, name:'女子', txt:'打火机可点不燃我的心。'},
-			{type:6, name:'男子', txt:'天快黑了，我要为你点燃整片天空。'},
-
+			{type:7, name:'小孩A', txt:'程二狗，快出来放炮了'},
+			{type:7, name:'小孩A', txt:'我今天买了很多擦炮'},
+			{type:6, name:'小孩B', txt:'走走走，我也买了很多'},
+			{type:6, name:'小孩B', txt:'我偷了我的压岁钱，买了很多窜天猴'},
+			{type:6, name:'小孩B', txt:'我们去炸隔壁何小花'},
+			{type:6, name:'小孩B', txt:'她老是揍我！'},
+			{type:7, name:'小孩A', txt:'还是别了，我可打不过她'},
+			{type:7, name:'小孩A', txt:'你快出来呀，马上掘金烟花秀就要开始了'},
+			{type:7, name:'小孩A', txt:'再不快点就没好位置了'},
+			{type:7, name:'小孩A', txt:'咦，你看'}
 		],
 		// 阶段二
-		sunset: 8000,   // 天黑时间
+		sunset: 6000,   // 天黑时间
 
 	    // 阶段三
-		fireworkInterval:[60, 240],// 烟花产生间隔 //---不建议改动
+		fireworkInterval:[1000, 4000],// 烟花产生间隔 //---不建议改动
 		//烟花的属性
 		fireworks:{ 
 			x: undefined,
@@ -88,11 +87,11 @@ const config = (function(){
 			wait: undefined,  //消失后 => 炸裂  等待时间
 			color: undefined,  //烟花颜色
 		},
-		fireWords:'你的眼睛|真好看|里面有|日月冬夏|晴雨山川|但是|我的眼睛|更好看|因为|里面有你',  // '|' 为分隔符
+		fireWords:'祝大家|新的一年|生意兴隆|财源滚滚|万事如意|步步高升|福寿安康|笑口常开|最重要的是|没有BUG',  // '|' 为分隔符
 		// hue:210 lightness 0
 		skyColor:'hsla({hue}, 60%, {lightness}%, 0.2)',	
 		fireOpt: {
-			wordInterval: 3000, //每段话出现的间隔时间
+			wordInterval: 2000, //每段话出现的间隔时间
 		},
     //烟花字的参数
     shape:{ 
@@ -105,21 +104,17 @@ const config = (function(){
 
 	
 		//阶段四
-		titleWords:'一不小心|就和你|到了白头', // '|' 为分隔符
+		titleWords: '天天开心|最为重要|祝大家|虎年大吉', // '|' 为分隔符
 		titleOpt:{
+			y: 20,
 			gap: 4,
-			size: 70,  //最后字的大小
-			pSize: 8,
-			delay: 4000, //
-			distance: 120, //行间距
-			e: 5000 //速率
+			size: 52,  //最后字的大小
+			pSize: 6,
+			color: 'rgb(180,4,4)',// 可以缺省
+			delay: 3000, //
+			distance: 100, //行间距
+			e: 2000 //速率
 		},
-		
-
-
-		
-
-		
 	}
 })();
 
@@ -128,6 +123,9 @@ config.dialogueOpt.interval = util.transTime(config.dialogueOpt.interval, 120);
 config.dialogueOpt.speed = util.transTime(config.dialogueOpt.speed, 18);
 
 config.sunset = util.transTime(config.sunset, 600);
+
+config.fireworkInterval[0] = util.transTime(config.fireworkInterval[0])
+config.fireworkInterval[1] = util.transTime(config.fireworkInterval[1])
 
 config.fireOpt.wordInterval = util.transTime(config.fireOpt.wordInterval, 180);
 config.fireOpt.denseTime = util.transTime(config.fireOpt.denseTime, 600);

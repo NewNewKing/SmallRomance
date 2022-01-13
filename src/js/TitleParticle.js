@@ -1,8 +1,8 @@
 import Heart from './fall/heart'
 
 class TitleParticle extends Heart{
-	constructor({xStart, yStart, x, y, minSize, maxSize, size, e = 240}){
-		super({x:xStart, y:yStart, minSize, maxSize, size});
+	constructor({xStart, yStart, x, y, minSize, maxSize, size, e = 240, color}){
+		super({x:xStart, y:yStart, minSize, maxSize, size, color});
 		this.yEnd = y;
 		this.xEnd = x;
 		this.e = e;

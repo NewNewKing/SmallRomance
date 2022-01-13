@@ -1,5 +1,5 @@
 const imgList = {
-	bg:require('../img/bg2.jpg'),
+	bg:require('../img/bg.jpg'),
 	musicon:require('../img/musicon.png'),
 	musicoff:require('../img/musicoff.png'),
 }

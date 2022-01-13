@@ -2,9 +2,9 @@ const random = Math.random;
 import Snowflake from './snowflake'
 
 class Heart extends Snowflake{
-	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1} = {}) {
+	constructor({x = 0,y = 0,minSize = 15,maxSize = 20,size,speed = 1, color} = {}) {
 		super({minSize,maxSize,x,y,size,speed});
-		this.color = `hsla(${random() * 360}, 90%, 65%, 1)`;
+		this.color = color || `hsla(${random() * 360}, 90%, 65%, 1)`; 
 	}
 	render(ctx){
 		this.fall();
