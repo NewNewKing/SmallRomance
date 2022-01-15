@@ -108,7 +108,7 @@ const config = (function(){
 		titleWords: '天天开心|最为重要|祝大家|虎年大吉', // '|' 为分隔符
 		titleOpt:{
 			y: 20,
-			gap: 4,
+			gap: 3,
 			size: 52,  //最后字的大小
 			pSize: 6,
 			color: 'rgb(180,4,4)',// 可以缺省
