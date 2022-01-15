@@ -6,7 +6,9 @@
 
 ### 快速预览
 
-访问[github.io网站](https://newnewking.github.io/SmallRomance/)
+访问
+[圣诞节](https://newnewking.github.io/SmallRomance/)
+[虎年春节]](https://newnewking.github.io/2022chunjie/)
 
 
 ### 开发者调试
@@ -43,8 +45,11 @@ npm run build
 
 只需改动参数就可开箱即用。
 
+建议改改文案即可，背景图与音乐的话 直接覆盖对应的文件就行
+
 参数说明相见global.js注释
 
+修改好了之后 进行打包 生成最终的文件
 ### 效果初级教程
 
 [烟花效果](https://github.com/NewNewKing/SmallRomance/issues/2);
