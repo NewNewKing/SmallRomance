@@ -65,7 +65,8 @@ const config = (function(){
 			{type:6, name:'小孩B', txt:'我们去炸隔壁何小花'},
 			{type:6, name:'小孩B', txt:'她老是揍我！'},
 			{type:7, name:'小孩A', txt:'还是别了，我可打不过她'},
-			{type:7, name:'小孩A', txt:'你快出来呀，马上掘金烟花秀就要开始了'},
+			{type:7, name:'小孩A', txt:'你快出来呀'},
+			{type:7, name:'小孩A', txt:'听说王兴欣在掘金搞了一场烟花秀'},
 			{type:7, name:'小孩A', txt:'再不快点就没好位置了'},
 			{type:7, name:'小孩A', txt:'咦，你看'}
 		],
