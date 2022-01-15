@@ -14,7 +14,8 @@ class Shape{
 	//写入想要渲染的字
 	write({txt, size=50, fontFamily='Arial', x = this.canvas.width / 2, y = 100, bold = false} = {}){
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-		this.ctx.font = `${bold ? 'bold ' : ''}${size}px ${fontFamily}`;
+		const font = `${bold ? 'bold ' : ''}${size}px ${fontFamily}`
+		this.ctx.font = font;
 		this.ctx.fillText(txt,x,y);
 		//记录的当前字的坐标
 		this.x = x;
@@ -33,7 +34,6 @@ class Shape{
 
 	//获取字的坐标点集合。
 	getDots({mini=1,gap = 5} = {}){
-		console.log(gap)
 		// const xs = this.x - this.count * this.size / 2 - 20;
 		// const ys = this.y - this.size / 2;
 		// const width = this.count * this.size + 40;

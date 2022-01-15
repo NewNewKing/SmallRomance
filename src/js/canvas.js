@@ -376,13 +376,14 @@ class Canvas {
     const size = this.status === 3 ? config.word.size : config.titleOpt.size
     const y = this.status == 3 ? config.word.y : config.titleOpt.y;
     const dotsArr = [];
-    config.shape.gap = this.status == 3 ? config.word.gap : config.titleOpt.gap;
     words.forEach((item,index)=> {
       let x;
       //文字居中
       length % 2 == 0 ? x = config.width / 2 + (index - length / 2) * size + 1 / 2 * size : x = config.width / 2 + (index - Math.floor(length / 2)) * size;
       this.shapeMaker.write({txt:item, x, y, size, bold: showFireworks});
-      const dots = this.shapeMaker.getDots(config.shape);
+      const dots = this.shapeMaker.getDots({
+        gap: this.status == 3 ? config.word.gap : config.titleOpt.gap
+      });
       dotsArr.push(...dots);
 
       const prtOption = {};

@@ -95,10 +95,8 @@ const config = (function(){
 			wordInterval: 2000, //每段话出现的间隔时间
 		},
     //烟花字的参数
-    shape:{ 
-      gap: 3,   //粒子的间隔数 gap越大 粒子数越少
-    },
     word:{  
+			gap: 3,   //粒子的间隔数 gap越大 粒子数越少
       size: 70,
       y: height / 4
     }, 
@@ -109,9 +107,9 @@ const config = (function(){
 		titleOpt:{
 			y: 20,
 			gap: 3,
-			size: 52,  //最后字的大小
+			size: 60,  //最后字的大小
 			pSize: 6,
-			color: 'rgb(180,4,4)',// 可以缺省
+			//color: 'rgb(180,4,4)',// 可以缺省
 			delay: 3000, //
 			distance: 100, //行间距
 			e: 2000 //速率
