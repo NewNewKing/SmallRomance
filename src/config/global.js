@@ -42,7 +42,7 @@ const config = (function(){
 		fallType: 'snow',
 
 		// 从阶段几开始 1、对话 2、天黑 3、烟花 4、展示文字
-		step: 3,
+		step: 1,
 		// 阶段一
 		dialogueOpt:{ 
 			interval: 1500,  //两句话的间隔时间
@@ -101,7 +101,7 @@ const config = (function(){
       color: undefined,  
     },
     // '|' 为分隔符 
-    fireWords:'没有BUG', 
+    fireWords:'祝大家|新的一年|生意兴隆|财源滚滚|万事如意|步步高升|福寿安康|笑口常开|最重要的是|没有BUG', 
     fireOpt: {
       //每段话出现的间隔时间
       wordInterval: 2000, 
