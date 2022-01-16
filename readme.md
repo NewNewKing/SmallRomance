@@ -6,7 +6,9 @@
 
 ### 快速预览
 
-访问[github.io网站](https://newnewking.github.io/SmallRomance/)
+[土味情话]](https://newnewking.github.io/SmallRomance/)
+
+[虎年春节]](https://newnewking.github.io/2022chunjie/)
 
 
 ### 开发者调试
